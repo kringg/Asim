@@ -15,10 +15,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         MainWindow.cpp \
     MainContent.cpp \
-    Qt/QFlowLayout.cpp
+    Qt/QFlowLayout.cpp \
+    Qt/QThumbnail.cpp
 
 HEADERS  += MainWindow.h \
     MainContent.h \
-    Qt/QFlowLayout.h
+    Qt/QFlowLayout.h \
+    Qt/QThumbnail.h
 
 FORMS    += MainWindow.ui

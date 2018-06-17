@@ -12,6 +12,7 @@ public:
     virtual void setPath(QString& path);
 
 private:
+    QString _lastPath;
     class FlowLayout* _layout;
 };
 
