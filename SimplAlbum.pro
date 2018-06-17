@@ -13,8 +13,12 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        MainWindow.cpp
+        MainWindow.cpp \
+    MainContent.cpp \
+    Qt/QFlowLayout.cpp
 
-HEADERS  += MainWindow.h
+HEADERS  += MainWindow.h \
+    MainContent.h \
+    Qt/QFlowLayout.h
 
 FORMS    += MainWindow.ui
