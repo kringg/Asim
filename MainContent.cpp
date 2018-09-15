@@ -1,9 +1,8 @@
 #include <QDir>
 #include <QImageReader>
-#include "MainContent.h"
-#include <QPushButton>
-#include <Qt/QFlowLayout.h>
+#include "Qt/QFlowLayout.h"
 #include "Qt/QThumbnail.h"
+#include "MainContent.h"
 
 MainContent::MainContent() :
     _layout(new FlowLayout(this))
