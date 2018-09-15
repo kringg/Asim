@@ -8,6 +8,9 @@ namespace Ui {
 class MainWindow;
 }
 
+/*
+ *
+ */
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -17,8 +20,8 @@ public:
     ~MainWindow();
 
 protected slots:
-    virtual void onConfigRootPath();
-    virtual void onTreeIndex(QModelIndex index);
+    virtual void setRootPath(QString rootPath = QString());
+    virtual void setTreeIndex(QModelIndex index);
 
 private:
     Ui::MainWindow *_gui;

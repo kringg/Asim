@@ -1,3 +1,4 @@
+#include <iostream>
 #include <QFileDialog>
 #include <QFileSystemModel>
 #include "MainWindow.h"
@@ -10,50 +11,59 @@ MainWindow::MainWindow(QWidget *parent) :
     _content(new MainContent()),
     _treeModel(new QFileSystemModel())
 {
+    // Initialize
     _gui->setupUi(this);
     _gui->scrollArea->setWidget(_content);
 
-    QString rootPath = "C:/";
-    _treeModel->setFilter(QDir::Dirs | QDir::Drives | QDir::NoDotAndDotDot);
-    _treeModel->setRootPath(rootPath);
+    // Configure tree view pane
     _gui->treeView->setModel(_treeModel);
-    _gui->treeView->setRootIndex(_treeModel->index(rootPath));
-
     _gui->treeView->hideColumn(1); // Size
     _gui->treeView->hideColumn(2); // Type
     _gui->treeView->hideColumn(3); // Date
+    setRootPath("C:/");
 
-    _gui->splitter->setStretchFactor(0, 1);
-    _gui->splitter->setStretchFactor(1, 10);
-
-    //
-    connect(_gui->actionConfigRootPath, SIGNAL(triggered()), this, SLOT(onConfigRootPath()));
-    connect(_gui->treeView, SIGNAL(clicked(QModelIndex)), this, SLOT(onTreeIndex(QModelIndex)));
+    // Connect signals and slots
+    connect(_gui->actionConfigRootPath, SIGNAL(triggered()), this, SLOT(setRootPath()));
+    connect(_gui->treeView, SIGNAL(clicked(QModelIndex)), this, SLOT(setTreeIndex(QModelIndex)));
 }
 
 MainWindow::~MainWindow()
 {
     delete _gui;
+    delete _content;
     delete _treeModel;
 }
 
 /*
  *
  */
-void MainWindow::onConfigRootPath()
+void MainWindow::setRootPath(QString rootPath)
 {
-    QString dir = QFileDialog::getExistingDirectory(this,
-                                                    tr("Open Directory"),
-                                                    _treeModel->rootPath(),
-                                                    QFileDialog::ShowDirsOnly);
-    if (!dir.isEmpty())
+    // Conditional browse
+    if (rootPath.isEmpty())
     {
-        _gui->treeView->setRootIndex(_treeModel->index(dir));
+        rootPath = QFileDialog::getExistingDirectory(this,
+                                                     tr("Open Directory"),
+                                                     _treeModel->rootPath(),
+                                                     QFileDialog::ShowDirsOnly);
+    }
+
+    // Update components
+    if (!rootPath.isEmpty())
+    {
+        // Update tree model and view
+        _treeModel->setRootPath(rootPath);
+        _gui->treeView->setRootIndex(_treeModel->index(rootPath));
+
+        // Resize split-screen components
+        int splitX0 = _gui->treeView->width() * 2;
+        int splitX1 = QMainWindow::width() - splitX0;
+        _gui->splitter->setSizes(QList<int>() << splitX0 << splitX1);
     }
 }
 
 
-void MainWindow::onTreeIndex(QModelIndex index)
+void MainWindow::setTreeIndex(QModelIndex index)
 {
     _content->setPath(_treeModel->filePath(index));
 }

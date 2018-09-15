@@ -37,8 +37,8 @@ void MainContent::setPath(QString& path)
 
         // Load content
         QDir dir(path);
-        QFileInfoList files = dir.entryInfoList(nameFilters, QDir::Files);
-        foreach (QFileInfo info, files)
+        QFileInfoList infos = dir.entryInfoList(nameFilters, QDir::Files);
+        foreach (QFileInfo info, infos)
         {
             _layout->addWidget(new QThumbnail(info.absoluteFilePath(), this));
         }
