@@ -43,3 +43,16 @@ void MainContent::setPath(QString& path)
         }
     }
 }
+
+void MainContent::setSize(int size)
+{
+    for (int i = 0; i < _layout->count(); ++i)
+    {
+        QWidget* widget = _layout->itemAt(i)->widget();
+        QThumbnail* thumb = dynamic_cast<QThumbnail*> (widget);
+        if (thumb != nullptr)
+        {
+            thumb->setSizeId(size);
+        }
+    }
+}

@@ -10,6 +10,7 @@ public:
     virtual ~MainContent();
 
     virtual void setPath(QString& path);
+    virtual void setSize(int size);
 
 private:
     QString _lastPath;

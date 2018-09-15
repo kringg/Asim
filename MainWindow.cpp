@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Connect signals and slots
     connect(_gui->actionConfigRootPath, SIGNAL(triggered()), this, SLOT(setRootPath()));
     connect(_gui->treeView, SIGNAL(clicked(QModelIndex)), this, SLOT(setTreeIndex(QModelIndex)));
+    connect(_gui->sizeId, &QSlider::valueChanged, _content, &MainContent::setSize);
 }
 
 MainWindow::~MainWindow()
