@@ -27,15 +27,52 @@
       </widget>
       <widget class="QWidget" name="gridLayoutWidget">
        <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0" colspan="10">
+         <widget class="QScrollArea" name="scrollArea">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>1</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaContents">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>504</width>
+             <height>384</height>
+            </rect>
+           </property>
+          </widget>
+         </widget>
+        </item>
         <item row="1" column="0">
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="btnRotateClockwise">
           <property name="text">
-           <string>PushButton</string>
+           <string>⭮</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="4">
+         <widget class="QPushButton" name="btnAcceptReject">
+          <property name="text">
+           <string>👍</string>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QSlider" name="sizeId">
+         <widget class="QPushButton" name="btnRotateCounterClockwise">
+          <property name="text">
+           <string>⭯</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="9">
+         <widget class="QSlider" name="sliderSize">
           <property name="minimum">
            <number>1</number>
           </property>
@@ -56,27 +93,72 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="0" colspan="2">
-         <widget class="QScrollArea" name="scrollArea">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-            <horstretch>1</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="widgetResizable">
-           <bool>true</bool>
-          </property>
-          <widget class="QWidget" name="scrollAreaWidgetContents">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>359</width>
-             <height>419</height>
-            </rect>
+        <item row="1" column="6">
+         <widget class="QComboBox" name="comboBoxEditMode">
+          <item>
+           <property name="text">
+            <string>Default</string>
            </property>
-          </widget>
+          </item>
+         </widget>
+        </item>
+        <item row="1" column="5">
+         <widget class="Line" name="line">
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="8">
+         <widget class="Line" name="line_2">
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
+         <widget class="QComboBox" name="comboBoxViewMode">
+          <property name="currentIndex">
+           <number>1</number>
+          </property>
+          <item>
+           <property name="text">
+            <string>All</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Accepted</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Rejected</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="1" column="7">
+         <widget class="QPushButton" name="btnEdit">
+          <property name="text">
+           <string>🎨</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="Line" name="line_3">
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
          </widget>
         </item>
        </layout>
@@ -103,15 +185,15 @@
     <property name="title">
      <string>Edit</string>
     </property>
-    <addaction name="actionConfigRootPath"/>
+    <addaction name="setRootPath"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionConfigRootPath">
+  <action name="setRootPath">
    <property name="text">
-    <string>Config Root Path</string>
+    <string>Set Root Path</string>
    </property>
   </action>
  </widget>

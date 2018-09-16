@@ -22,10 +22,20 @@ MainWindow::MainWindow(QWidget *parent) :
     _gui->treeView->hideColumn(3); // Date
     setRootPath("C:/");
 
+    // Configure splitter stretch factor
+    _gui->splitter->setStretchFactor(0, 0);
+    _gui->splitter->setStretchFactor(1, 1);
+
+    // Configure unicode emoji buttons
+    _gui->btnEdit->setFixedWidth(_gui->btnEdit->height());
+    _gui->btnAcceptReject->setFixedWidth(_gui->btnAcceptReject->height());
+    _gui->btnRotateClockwise->setFixedWidth(_gui->btnRotateClockwise->height());
+    _gui->btnRotateCounterClockwise->setFixedWidth(_gui->btnRotateCounterClockwise->height());
+
     // Connect signals and slots
-    connect(_gui->actionConfigRootPath, SIGNAL(triggered()), this, SLOT(setRootPath()));
-    connect(_gui->treeView, SIGNAL(clicked(QModelIndex)), this, SLOT(setTreeIndex(QModelIndex)));
-    connect(_gui->sizeId, &QSlider::valueChanged, _content, &MainContent::setSize);
+    connect(_gui->treeView, &QTreeView::clicked, this, &MainWindow::setTreeIndex);
+    connect(_gui->setRootPath, &QAction::triggered, this, &MainWindow::browseRootPath);
+    connect(_gui->sliderSize, &QSlider::valueChanged, _content, &MainContent::setSize);
 }
 
 MainWindow::~MainWindow()
@@ -38,19 +48,22 @@ MainWindow::~MainWindow()
 /*
  *
  */
+void MainWindow::browseRootPath()
+{
+    QString rootPath = QFileDialog::getExistingDirectory(this,
+                                                         tr("Open Directory"),
+                                                         _treeModel->rootPath(),
+                                                         QFileDialog::ShowDirsOnly);
+    if (!rootPath.isEmpty())
+    {
+        setRootPath(rootPath);
+    }
+}
+
 void MainWindow::setRootPath(QString rootPath)
 {
-    // Conditional browse
-    if (rootPath.isEmpty())
-    {
-        rootPath = QFileDialog::getExistingDirectory(this,
-                                                     tr("Open Directory"),
-                                                     _treeModel->rootPath(),
-                                                     QFileDialog::ShowDirsOnly);
-    }
-
-    // Update components
-    if (!rootPath.isEmpty())
+    // Validate root path
+    if (QFileInfo::exists(rootPath))
     {
         // Update tree model and view
         _treeModel->setRootPath(rootPath);

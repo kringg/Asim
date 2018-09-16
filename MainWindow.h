@@ -20,7 +20,8 @@ public:
     ~MainWindow();
 
 protected slots:
-    virtual void setRootPath(QString rootPath = QString());
+    virtual void browseRootPath();
+    virtual void setRootPath(QString rootPath);
     virtual void setTreeIndex(QModelIndex index);
 
 private:

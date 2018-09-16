@@ -3,6 +3,7 @@
 #include "Qt/QFlowLayout.h"
 #include "Qt/QThumbnail.h"
 #include "MainContent.h"
+#include "Image.h"
 
 MainContent::MainContent() :
     _layout(new FlowLayout(this))
@@ -22,6 +23,11 @@ void MainContent::setPath(QString& path)
         // Purge existing
         _lastPath = path;
         _layout->clear();
+        foreach (Image* image, _images)
+        {
+            delete image;
+        }
+        _images.clear();
 
         // Deduce image formats
         static QStringList nameFilters;
@@ -39,20 +45,17 @@ void MainContent::setPath(QString& path)
         QFileInfoList infos = dir.entryInfoList(nameFilters, QDir::Files);
         foreach (QFileInfo info, infos)
         {
-            _layout->addWidget(new QThumbnail(info.absoluteFilePath(), this));
+            Image* image = new Image(info.absoluteFilePath(), this);
+            _layout->addWidget(image->getThumbnail());
+            _images.append(image);
         }
     }
 }
 
 void MainContent::setSize(int size)
 {
-    for (int i = 0; i < _layout->count(); ++i)
+    foreach (Image* image, _images)
     {
-        QWidget* widget = _layout->itemAt(i)->widget();
-        QThumbnail* thumb = dynamic_cast<QThumbnail*> (widget);
-        if (thumb != nullptr)
-        {
-            thumb->setSizeId(size);
-        }
+        image->getThumbnail()->setSizeId(size);
     }
 }

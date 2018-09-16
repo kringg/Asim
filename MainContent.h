@@ -15,6 +15,7 @@ public:
 private:
     QString _lastPath;
     class FlowLayout* _layout;
+    QList<class Image*> _images;
 };
 
 #endif // MAINCONTENT_H
