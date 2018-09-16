@@ -85,3 +85,22 @@ void MainContent::onThumbsDown()
         }
     }
 }
+
+void MainContent::onViewMode(int viewMode)
+{
+    foreach (Image* image, _images)
+    {
+        switch (viewMode)
+        {
+        case 0:
+            image->getThumbnail()->setVisible(true);
+            break;
+        case 1:
+            image->getThumbnail()->setVisible(image->isThumbsUp());
+            break;
+        case 2:
+            image->getThumbnail()->setVisible(image->isThumbsDown());
+            break;
+        }
+    }
+}

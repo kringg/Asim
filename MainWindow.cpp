@@ -1,6 +1,7 @@
 #include <iostream>
 #include <QFileDialog>
 #include <QFileSystemModel>
+#include <QStandardPaths>
 #include "MainWindow.h"
 #include "MainContent.h"
 #include "ui_MainWindow.h"
@@ -20,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _gui->treeView->hideColumn(1); // Size
     _gui->treeView->hideColumn(2); // Type
     _gui->treeView->hideColumn(3); // Date
-    setRootPath("C:/");
+    setRootPath(QStandardPaths::writableLocation(QStandardPaths::PicturesLocation));
 
     // Configure splitter stretch factor
     _gui->splitter->setStretchFactor(0, 0);
@@ -40,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(_gui->sliderSize, &QSlider::valueChanged, _content, &MainContent::setSize);
     connect(_gui->btnThumbsUp, &QPushButton::clicked, _content, &MainContent::onThumbsUp);
     connect(_gui->btnThumbsDown, &QPushButton::clicked, _content, &MainContent::onThumbsDown);
+    connect(_gui->cbViewMode, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), _content, &MainContent::onViewMode);
 }
 
 MainWindow::~MainWindow()
@@ -71,6 +73,7 @@ void MainWindow::setRootPath(QString rootPath)
     {
         // Update tree model and view
         _treeModel->setRootPath(rootPath);
+        _treeModel->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
         _gui->treeView->setRootIndex(_treeModel->index(rootPath));
 
         // Resize split-screen components

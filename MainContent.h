@@ -14,6 +14,7 @@ public:
 
     virtual void onThumbsUp();
     virtual void onThumbsDown();
+    virtual void onViewMode(int viewMode);
 
 private:
     QString _lastPath;

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
+    <width>705</width>
     <height>480</height>
    </rect>
   </property>
@@ -21,6 +21,9 @@
        <enum>Qt::Horizontal</enum>
       </property>
       <widget class="QTreeView" name="treeView">
+       <property name="statusTip">
+        <string>Select which album (directory) to open for browsing / editing</string>
+       </property>
        <attribute name="headerVisible">
         <bool>false</bool>
        </attribute>
@@ -38,9 +41,12 @@
          </widget>
         </item>
         <item row="1" column="3">
-         <widget class="QComboBox" name="comboBoxViewMode">
+         <widget class="QComboBox" name="cbViewMode">
+          <property name="statusTip">
+           <string>Change view mode to filter on thumbs-up / thumbs-down status</string>
+          </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <item>
            <property name="text">
@@ -61,6 +67,9 @@
         </item>
         <item row="1" column="8">
          <widget class="QPushButton" name="btnEdit">
+          <property name="statusTip">
+           <string>Create new snapshot and open selected image(s) in editor</string>
+          </property>
           <property name="text">
            <string>🎨</string>
           </property>
@@ -68,6 +77,9 @@
         </item>
         <item row="1" column="1">
          <widget class="QPushButton" name="btnRotateCounterClockwise">
+          <property name="statusTip">
+           <string>Rotate selected image(s) 90° counterclockwise</string>
+          </property>
           <property name="text">
            <string>⭯</string>
           </property>
@@ -75,6 +87,9 @@
         </item>
         <item row="1" column="0">
          <widget class="QPushButton" name="btnRotateClockwise">
+          <property name="statusTip">
+           <string>Rotate selected image(s) 90° clockwise</string>
+          </property>
           <property name="text">
            <string>⭮</string>
           </property>
@@ -82,6 +97,9 @@
         </item>
         <item row="1" column="5">
          <widget class="QPushButton" name="btnThumbsUp">
+          <property name="statusTip">
+           <string>Accept (thumbs-up) current image(s)</string>
+          </property>
           <property name="text">
            <string>👍</string>
           </property>
@@ -89,6 +107,9 @@
         </item>
         <item row="1" column="10">
          <widget class="QSlider" name="sliderSize">
+          <property name="statusTip">
+           <string>Resize thumbnails (XS ↔ S ↔ M ↔ L ↔ XL)</string>
+          </property>
           <property name="minimum">
            <number>1</number>
           </property>
@@ -117,6 +138,9 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="statusTip">
+           <string>Contents (images) of currently selected album (directory)</string>
+          </property>
           <property name="widgetResizable">
            <bool>true</bool>
           </property>
@@ -125,7 +149,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>542</width>
+             <width>607</width>
              <height>384</height>
             </rect>
            </property>
@@ -153,7 +177,10 @@
          </widget>
         </item>
         <item row="1" column="7">
-         <widget class="QComboBox" name="comboBoxEditMode">
+         <widget class="QComboBox" name="cbEditMode">
+          <property name="statusTip">
+           <string>Choose application with which to edit selected image(s)</string>
+          </property>
           <item>
            <property name="text">
             <string>Default</string>
@@ -163,6 +190,9 @@
         </item>
         <item row="1" column="4">
          <widget class="QPushButton" name="btnThumbsDown">
+          <property name="statusTip">
+           <string>Reject (thumbs-down) current image(s)</string>
+          </property>
           <property name="text">
            <string>👎</string>
           </property>
@@ -179,7 +209,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>640</width>
+     <width>705</width>
      <height>21</height>
     </rect>
    </property>

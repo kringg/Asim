@@ -14,6 +14,8 @@ public:
 
     // Accessors
     virtual bool isSelected();
+    virtual bool isThumbsUp();
+    virtual bool isThumbsDown();
     virtual class QThumbnail* getThumbnail();
 
     // Mutators
@@ -21,6 +23,7 @@ public:
     virtual void setThumbsDown();
 
 private:
+    bool _isThumbsUp;
     class QThumbnail* _thumbnail;
 };
 
