@@ -59,3 +59,29 @@ void MainContent::setSize(int size)
         image->getThumbnail()->setSizeId(size);
     }
 }
+
+/*
+ * PUBLIC
+ *  Operations
+ */
+void MainContent::onThumbsUp()
+{
+    foreach (Image* image, _images)
+    {
+        if (image->isSelected())
+        {
+            image->setThumbsUp();
+        }
+    }
+}
+
+void MainContent::onThumbsDown()
+{
+    foreach (Image* image, _images)
+    {
+        if (image->isSelected())
+        {
+            image->setThumbsDown();
+        }
+    }
+}

@@ -7,8 +7,30 @@ Image::Image(QString& imgPath, QWidget* parent) :
 
 }
 
+/*
+ * PUBLIC
+ *  Accessors
+ */
+bool Image::isSelected()
+{
+    return _thumbnail->isSelected();
+}
 
 QThumbnail* Image::getThumbnail()
 {
     return _thumbnail;
+}
+
+/*
+ * PUBLIC
+ *  Mutatos
+ */
+void Image::setThumbsUp()
+{
+    _thumbnail->setIsRejected(false);
+}
+
+void Image::setThumbsDown()
+{
+    _thumbnail->setIsRejected(true);
 }

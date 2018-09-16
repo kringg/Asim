@@ -9,15 +9,29 @@
 class QThumbnail : public QLabel
 {
 public:
-    QThumbnail(QString& file, QWidget* parent = nullptr);
+    QThumbnail(QString& file, QWidget* parent);
     virtual ~QThumbnail();
 
-    //
+    // Accessors
+    virtual bool isSelected();
+
+    // Mutators
     virtual void setSizeId(int sizeId);
+    virtual void setSelected(bool isSelected);
+    virtual void setIsRejected(bool isRejected);
+
+protected:
+    // Operations
+    virtual void paintEvent(QPaintEvent* event) override;
+    virtual void mousePressEvent(QMouseEvent* event) override;
 
 private:
+    bool _isRejected;
+    bool _isSelected;
     QPixmap* _pixmap;
-    QList<int> _sizes;
+
+    static const int BORDER_SIZE;
+    static const QList<int> IMAGE_SIZES;
 };
 
 #endif // QTHUMBNAIL_H

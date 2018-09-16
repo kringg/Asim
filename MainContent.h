@@ -12,6 +12,9 @@ public:
     virtual void setPath(QString& path);
     virtual void setSize(int size);
 
+    virtual void onThumbsUp();
+    virtual void onThumbsDown();
+
 private:
     QString _lastPath;
     class FlowLayout* _layout;

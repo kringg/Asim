@@ -27,40 +27,42 @@
       </widget>
       <widget class="QWidget" name="gridLayoutWidget">
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0" colspan="10">
-         <widget class="QScrollArea" name="scrollArea">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-            <horstretch>1</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+        <item row="1" column="2">
+         <widget class="Line" name="line_3">
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
           </property>
-          <property name="widgetResizable">
-           <bool>true</bool>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="scrollAreaContents">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>504</width>
-             <height>384</height>
-            </rect>
+         </widget>
+        </item>
+        <item row="1" column="3">
+         <widget class="QComboBox" name="comboBoxViewMode">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <item>
+           <property name="text">
+            <string>All Images</string>
            </property>
-          </widget>
+          </item>
+          <item>
+           <property name="text">
+            <string>Thumbs Up</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Thumbs Down</string>
+           </property>
+          </item>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="btnRotateClockwise">
+        <item row="1" column="8">
+         <widget class="QPushButton" name="btnEdit">
           <property name="text">
-           <string>⭮</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="4">
-         <widget class="QPushButton" name="btnAcceptReject">
-          <property name="text">
-           <string>👍</string>
+           <string>🎨</string>
           </property>
          </widget>
         </item>
@@ -71,7 +73,21 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="9">
+        <item row="1" column="0">
+         <widget class="QPushButton" name="btnRotateClockwise">
+          <property name="text">
+           <string>⭮</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="5">
+         <widget class="QPushButton" name="btnThumbsUp">
+          <property name="text">
+           <string>👍</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="10">
          <widget class="QSlider" name="sliderSize">
           <property name="minimum">
            <number>1</number>
@@ -93,16 +109,30 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="6">
-         <widget class="QComboBox" name="comboBoxEditMode">
-          <item>
-           <property name="text">
-            <string>Default</string>
+        <item row="0" column="0" colspan="11">
+         <widget class="QScrollArea" name="scrollArea">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>1</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaContents">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>542</width>
+             <height>384</height>
+            </rect>
            </property>
-          </item>
+          </widget>
          </widget>
         </item>
-        <item row="1" column="5">
+        <item row="1" column="6">
          <widget class="Line" name="line">
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
@@ -112,7 +142,7 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="8">
+        <item row="1" column="9">
          <widget class="Line" name="line_2">
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
@@ -122,42 +152,19 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="3">
-         <widget class="QComboBox" name="comboBoxViewMode">
-          <property name="currentIndex">
-           <number>1</number>
-          </property>
-          <item>
-           <property name="text">
-            <string>All</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Accepted</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Rejected</string>
-           </property>
-          </item>
-         </widget>
-        </item>
         <item row="1" column="7">
-         <widget class="QPushButton" name="btnEdit">
-          <property name="text">
-           <string>🎨</string>
-          </property>
+         <widget class="QComboBox" name="comboBoxEditMode">
+          <item>
+           <property name="text">
+            <string>Default</string>
+           </property>
+          </item>
          </widget>
         </item>
-        <item row="1" column="2">
-         <widget class="Line" name="line_3">
-          <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+        <item row="1" column="4">
+         <widget class="QPushButton" name="btnThumbsDown">
+          <property name="text">
+           <string>👎</string>
           </property>
          </widget>
         </item>

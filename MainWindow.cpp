@@ -28,14 +28,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Configure unicode emoji buttons
     _gui->btnEdit->setFixedWidth(_gui->btnEdit->height());
-    _gui->btnAcceptReject->setFixedWidth(_gui->btnAcceptReject->height());
+    _gui->btnThumbsUp->setFixedWidth(_gui->btnThumbsUp->height());
+    _gui->btnThumbsDown->setFixedWidth(_gui->btnThumbsDown->height());
     _gui->btnRotateClockwise->setFixedWidth(_gui->btnRotateClockwise->height());
     _gui->btnRotateCounterClockwise->setFixedWidth(_gui->btnRotateCounterClockwise->height());
 
     // Connect signals and slots
     connect(_gui->treeView, &QTreeView::clicked, this, &MainWindow::setTreeIndex);
     connect(_gui->setRootPath, &QAction::triggered, this, &MainWindow::browseRootPath);
+
     connect(_gui->sliderSize, &QSlider::valueChanged, _content, &MainContent::setSize);
+    connect(_gui->btnThumbsUp, &QPushButton::clicked, _content, &MainContent::onThumbsUp);
+    connect(_gui->btnThumbsDown, &QPushButton::clicked, _content, &MainContent::onThumbsDown);
 }
 
 MainWindow::~MainWindow()
@@ -75,7 +79,6 @@ void MainWindow::setRootPath(QString rootPath)
         _gui->splitter->setSizes(QList<int>() << splitX0 << splitX1);
     }
 }
-
 
 void MainWindow::setTreeIndex(QModelIndex index)
 {

@@ -10,9 +10,15 @@
 class Image
 {
 public:
-    Image(QString& imgPath, QWidget* parent = nullptr);
+    Image(QString& imgPath, QWidget* parent);
 
+    // Accessors
+    virtual bool isSelected();
     virtual class QThumbnail* getThumbnail();
+
+    // Mutators
+    virtual void setThumbsUp();
+    virtual void setThumbsDown();
 
 private:
     class QThumbnail* _thumbnail;
