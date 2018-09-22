@@ -17,12 +17,14 @@ SOURCES += main.cpp\
     MainContent.cpp \
     Qt/QFlowLayout.cpp \
     Qt/QThumbnail.cpp \
-    Image.cpp
+    Image.cpp \
+    Config.cpp
 
 HEADERS  += MainWindow.h \
     MainContent.h \
     Qt/QFlowLayout.h \
     Qt/QThumbnail.h \
-    Image.h
+    Image.h \
+    Config.h
 
 FORMS    += MainWindow.ui

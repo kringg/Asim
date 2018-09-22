@@ -10,7 +10,7 @@
 class Image
 {
 public:
-    Image(QString& imgPath, QWidget* parent);
+    Image(QString& imgPath, QWidget* parent = nullptr);
 
     // Accessors
     virtual bool isSelected();
@@ -21,6 +21,7 @@ public:
     // Mutators
     virtual void setThumbsUp();
     virtual void setThumbsDown();
+    virtual void setSelected(bool);
 
 private:
     bool _isThumbsUp;

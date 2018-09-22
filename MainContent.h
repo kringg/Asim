@@ -16,10 +16,15 @@ public:
     virtual void onThumbsDown();
     virtual void onViewMode(int viewMode);
 
+protected:
+    virtual void mousePressEvent(QMouseEvent* event) override;
+
 private:
     QString _lastPath;
     class FlowLayout* _layout;
     QList<class Image*> _images;
+
+    static const int TIMEOUT = 1000;
 };
 
 #endif // MAINCONTENT_H

@@ -1,3 +1,4 @@
+#include <QtConcurrent/QtConcurrent>
 #include <QPainter>
 #include "QThumbnail.h"
 
@@ -8,15 +9,40 @@ QThumbnail::QThumbnail(QString& file, QWidget* parent) :
     QLabel(parent),
     _isRejected(false),
     _isSelected(false),
-    _pixmap(new QPixmap(file))
+    _pixmap(new QPixmap())
 {
-    setSizeId(3);
-    setSelected(false);
+    //QtConcurrent::run([=]()
+    //{
+        if (_pixmap != nullptr)
+        {
+            QFileInfo info(file);
+            QString thumbPath = info.path() + "/.thumbs";
+            QString thumbFile = thumbPath + "/" + info.fileName();
+            QDir().mkpath(thumbPath); // Create thumbnail directory
+
+            // Does a thumbnail already exist?
+            if (QFileInfo(thumbFile).exists())
+            {
+                // Yes, load it
+                _pixmap->load(thumbFile);
+            }
+            else
+            {
+                // No, create it
+                _pixmap->load(file);
+                _pixmap->scaled(512, 512, Qt::KeepAspectRatio).save(thumbFile);
+            }
+
+            setSelected(false);
+            setSizeId(3);
+        }
+    //});
 }
 
 QThumbnail::~QThumbnail()
 {
     delete _pixmap;
+    _pixmap = nullptr;
 }
 
 /*
@@ -77,6 +103,7 @@ void QThumbnail::paintEvent(QPaintEvent* event)
 
 void QThumbnail::mousePressEvent(QMouseEvent* event)
 {
-    setSelected(!_isSelected);
+    bool isSelected = _isSelected;
+    QTimer::singleShot(1, [=](){setSelected(!isSelected);});
     QLabel::mousePressEvent(event);
 }

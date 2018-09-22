@@ -1,4 +1,6 @@
+#include <QApplication>
 #include <QDir>
+#include <QTimer>
 #include <QImageReader>
 #include "Qt/QFlowLayout.h"
 #include "Qt/QThumbnail.h"
@@ -73,6 +75,7 @@ void MainContent::onThumbsUp()
             image->setThumbsUp();
         }
     }
+    QTimer::singleShot(TIMEOUT, [=](){ onViewMode(-1); });
 }
 
 void MainContent::onThumbsDown()
@@ -84,10 +87,15 @@ void MainContent::onThumbsDown()
             image->setThumbsDown();
         }
     }
+    QTimer::singleShot(TIMEOUT, [=](){ onViewMode(-1); });
 }
 
 void MainContent::onViewMode(int viewMode)
 {
+    static int lastViewMode = 1;
+    viewMode = (viewMode < 0) ? lastViewMode : viewMode;
+    lastViewMode = (viewMode < 0) ? lastViewMode : viewMode;
+
     foreach (Image* image, _images)
     {
         switch (viewMode)
@@ -101,6 +109,25 @@ void MainContent::onViewMode(int viewMode)
         case 2:
             image->getThumbnail()->setVisible(image->isThumbsDown());
             break;
+        default:
+            // NO-OP
+            break;
         }
     }
+}
+
+/*
+ *
+ */
+void MainContent::mousePressEvent(QMouseEvent* event)
+{
+    // Enforce mutually-exclusive selection unless CTRL is active
+    if (QApplication::keyboardModifiers() ^ Qt::ControlModifier)
+    {
+        foreach (Image* image, _images)
+        {
+            image->setSelected(false);
+        }
+    }
+    QWidget::mousePressEvent(event);
 }

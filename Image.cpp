@@ -47,3 +47,8 @@ void Image::setThumbsDown()
     _isThumbsUp = false;
     _thumbnail->setIsRejected(true);
 }
+
+void Image::setSelected(bool isSelected)
+{
+    _thumbnail->setSelected(isSelected);
+}
