@@ -1,5 +1,7 @@
-#include <QtConcurrent/QtConcurrent>
+#include <QDir>
+#include <QTimer>
 #include <QPainter>
+#include <QFileInfo>
 #include "QThumbnail.h"
 
 const int QThumbnail::BORDER_SIZE = 2;
@@ -11,38 +13,28 @@ QThumbnail::QThumbnail(QString& file, QWidget* parent) :
     _isSelected(false),
     _pixmap(new QPixmap())
 {
-    //QtConcurrent::run([=]()
-    //{
-        if (_pixmap != nullptr)
-        {
-            QFileInfo info(file);
-            QString thumbPath = info.path() + "/.thumbs";
-            QString thumbFile = thumbPath + "/" + info.fileName();
-            QDir().mkpath(thumbPath); // Create thumbnail directory
+    QFileInfo info(file);
+    QString thumbPath = info.path() + "/.thumbs";
+    QString thumbFile = thumbPath + "/" + info.fileName();
+    QDir().mkpath(thumbPath); // Create thumbnail directory
 
-            // Does a thumbnail already exist?
-            if (QFileInfo(thumbFile).exists())
-            {
-                // Yes, load it
-                _pixmap->load(thumbFile);
-            }
-            else
-            {
-                // No, create it
-                _pixmap->load(file);
-                _pixmap->scaled(512, 512, Qt::KeepAspectRatio).save(thumbFile);
-            }
+    // Does a thumbnail already exist?
+    if (!QFileInfo(thumbFile).exists())
+    {
+        // No, create it
+        QImage image(file);
+        image.scaled(512, 512, Qt::KeepAspectRatio).save(thumbFile);
+    }
 
-            setSelected(false);
-            setSizeId(3);
-        }
-    //});
+    // Load and init thumbnail
+    _pixmap->load(thumbFile);
+    setSelected(false);
+    setSizeId(3);
 }
 
 QThumbnail::~QThumbnail()
 {
     delete _pixmap;
-    _pixmap = nullptr;
 }
 
 /*

@@ -50,6 +50,7 @@ void MainContent::setPath(QString& path)
             Image* image = new Image(info.absoluteFilePath(), this);
             _layout->addWidget(image->getThumbnail());
             _images.append(image);
+            qApp->processEvents();
         }
     }
 }

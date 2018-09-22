@@ -1,3 +1,4 @@
+#include <QApplication>
 #include <QThreadPool>
 #include "MainWindow.h"
 
