@@ -1,8 +1,7 @@
-#include <iostream>
 #include <QFileDialog>
-#include <QFileSystemModel>
-#include <QStandardPaths>
 #include <QSettings>
+#include <QStandardPaths>
+
 #include "MainWindow.h"
 #include "MainContent.h"
 #include "ui_MainWindow.h"
@@ -36,17 +35,17 @@ MainWindow::MainWindow(QWidget *parent) :
     _gui->btnRotateCounterClockwise->setFixedWidth(_gui->btnRotateCounterClockwise->height());
 
     // Connect signals and slots
+    connect(qApp, &QApplication::aboutToQuit, this, &MainWindow::saveSettings);
+
     connect(_gui->treeView, &QTreeView::clicked, this, &MainWindow::setTreeIndex);
     connect(_gui->setRootPath, &QAction::triggered, this, &MainWindow::browseRootPath);
-
-    connect(qApp, &QApplication::aboutToQuit, this, &MainWindow::saveSettings);
 
     connect(_gui->sliderSize, &QSlider::valueChanged, _content, &MainContent::setSize);
     connect(_gui->btnThumbsUp, &QPushButton::clicked, _content, &MainContent::onThumbsUp);
     connect(_gui->btnThumbsDown, &QPushButton::clicked, _content, &MainContent::onThumbsDown);
     connect(_gui->cbViewMode, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), _content, &MainContent::onViewMode);
 
-    //
+    // Configuration
     loadSettings();
 }
 
@@ -62,7 +61,7 @@ MainWindow::~MainWindow()
  */
 void MainWindow::loadSettings()
 {
-    QSettings settings("ASIM", "MainWindow");
+    QSettings settings("KRingg", "Asim");
 
     QVariant path = settings.value("path");
     if (path.isValid())
@@ -80,7 +79,7 @@ void MainWindow::loadSettings()
 
 void MainWindow::saveSettings()
 {
-    QSettings settings("ASIM", "MainWindow");
+    QSettings settings("KRingg", "Asim");
     settings.setValue("path",  _treeModel->rootPath());
     settings.setValue("size0", _gui->splitter->sizes()[0]);
     settings.setValue("size1", _gui->splitter->sizes()[1]);
@@ -115,7 +114,9 @@ void MainWindow::setRootPath(QString rootPath)
 
 void MainWindow::setTreeIndex(QModelIndex index)
 {
+    _gui->control->setEnabled(false);
     _gui->treeView->setEnabled(false);
     _content->setPath(_treeModel->filePath(index));
     _gui->treeView->setEnabled(true);
+    _gui->control->setEnabled(true);
 }

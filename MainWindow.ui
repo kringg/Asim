@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Asim</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -29,108 +29,8 @@
        </attribute>
       </widget>
       <widget class="QWidget" name="gridLayoutWidget">
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="1" column="2">
-         <widget class="Line" name="line_3">
-          <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="3">
-         <widget class="QComboBox" name="cbViewMode">
-          <property name="statusTip">
-           <string>Change view mode to filter on thumbs-up / thumbs-down status</string>
-          </property>
-          <property name="currentIndex">
-           <number>1</number>
-          </property>
-          <item>
-           <property name="text">
-            <string>All Images</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Thumbs Up</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Thumbs Down</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="1" column="8">
-         <widget class="QPushButton" name="btnEdit">
-          <property name="statusTip">
-           <string>Create new snapshot and open selected image(s) in editor</string>
-          </property>
-          <property name="text">
-           <string>🎨</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QPushButton" name="btnRotateCounterClockwise">
-          <property name="statusTip">
-           <string>Rotate selected image(s) 90° counterclockwise</string>
-          </property>
-          <property name="text">
-           <string>⭯</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="btnRotateClockwise">
-          <property name="statusTip">
-           <string>Rotate selected image(s) 90° clockwise</string>
-          </property>
-          <property name="text">
-           <string>⭮</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="5">
-         <widget class="QPushButton" name="btnThumbsUp">
-          <property name="statusTip">
-           <string>Accept (thumbs-up) current image(s)</string>
-          </property>
-          <property name="text">
-           <string>👍</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="10">
-         <widget class="QSlider" name="sliderSize">
-          <property name="statusTip">
-           <string>Resize thumbnails (XS ↔ S ↔ M ↔ L ↔ XL)</string>
-          </property>
-          <property name="minimum">
-           <number>1</number>
-          </property>
-          <property name="maximum">
-           <number>5</number>
-          </property>
-          <property name="pageStep">
-           <number>1</number>
-          </property>
-          <property name="value">
-           <number>3</number>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="tickPosition">
-           <enum>QSlider::TicksAbove</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0" colspan="11">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
          <widget class="QScrollArea" name="scrollArea">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -156,46 +56,175 @@
           </widget>
          </widget>
         </item>
-        <item row="1" column="6">
-         <widget class="Line" name="line">
-          <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="9">
-         <widget class="Line" name="line_2">
-          <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="7">
-         <widget class="QComboBox" name="cbEditMode">
-          <property name="statusTip">
-           <string>Choose application with which to edit selected image(s)</string>
-          </property>
-          <item>
-           <property name="text">
-            <string>Default</string>
+        <item>
+         <widget class="QWidget" name="control" native="true">
+          <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,0,1,0,0,0,1,0,0,1">
+           <property name="leftMargin">
+            <number>0</number>
            </property>
-          </item>
-         </widget>
-        </item>
-        <item row="1" column="4">
-         <widget class="QPushButton" name="btnThumbsDown">
-          <property name="statusTip">
-           <string>Reject (thumbs-down) current image(s)</string>
-          </property>
-          <property name="text">
-           <string>👎</string>
-          </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="btnRotateClockwise">
+             <property name="statusTip">
+              <string>Rotate selected image(s) 90° clockwise</string>
+             </property>
+             <property name="text">
+              <string>⭮</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnRotateCounterClockwise">
+             <property name="statusTip">
+              <string>Rotate selected image(s) 90° counterclockwise</string>
+             </property>
+             <property name="text">
+              <string>⭯</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="Line" name="divider0">
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="cbViewMode">
+             <property name="statusTip">
+              <string>Change view mode to filter on thumbs-up / thumbs-down status</string>
+             </property>
+             <property name="currentIndex">
+              <number>1</number>
+             </property>
+             <item>
+              <property name="text">
+               <string>All Images</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Thumbs Up</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Thumbs Down</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnThumbsDown">
+             <property name="statusTip">
+              <string>Reject (thumbs-down) current image(s)</string>
+             </property>
+             <property name="text">
+              <string>👎</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnThumbsUp">
+             <property name="statusTip">
+              <string>Accept (thumbs-up) current image(s)</string>
+             </property>
+             <property name="text">
+              <string>👍</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="Line" name="divider1">
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="cbEditMode">
+             <property name="statusTip">
+              <string>Choose application with which to edit selected image(s)</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>Default</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnEdit">
+             <property name="statusTip">
+              <string>Create new snapshot and open selected image(s) in editor</string>
+             </property>
+             <property name="text">
+              <string>🎨</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="Line" name="diveder2">
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="sliderSize">
+             <property name="statusTip">
+              <string>Resize thumbnails (XS ↔ S ↔ M ↔ L ↔ XL)</string>
+             </property>
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <number>5</number>
+             </property>
+             <property name="pageStep">
+              <number>1</number>
+             </property>
+             <property name="value">
+              <number>3</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="tickPosition">
+              <enum>QSlider::TicksAbove</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+          <zorder>sliderSize</zorder>
+          <zorder>divider1</zorder>
+          <zorder>btnRotateCounterClockwise</zorder>
+          <zorder>cbEditMode</zorder>
+          <zorder>btnEdit</zorder>
+          <zorder>cbViewMode</zorder>
+          <zorder>btnThumbsUp</zorder>
+          <zorder>diveder2</zorder>
+          <zorder>divider0</zorder>
+          <zorder>btnRotateClockwise</zorder>
+          <zorder>btnThumbsDown</zorder>
          </widget>
         </item>
        </layout>
