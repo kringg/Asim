@@ -22,12 +22,13 @@ public:
     // Mutators
     virtual void setThumbsUp();
     virtual void setThumbsDown();
+    virtual void setRotation(int);
     virtual void setSelected(bool);
 
 private:
     bool _isThumbsUp;
-    QString _imgPathThumbsUp;
-    QString _imgPathThumbsDown;
+    QString _pathThumbsUp;
+    QString _pathThumbsDown;
     class QThumbnail* _thumbnail;
 };
 

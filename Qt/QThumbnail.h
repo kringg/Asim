@@ -17,9 +17,10 @@ public:
     virtual bool isSelected();
 
     // Mutators
+    virtual void setRotation(QMatrix&);
     virtual void setSizeId(int sizeId);
-    virtual void setSelected(bool isSelected);
     virtual void setIsRejected(bool isRejected);
+    virtual void setIsSelected(bool isSelected);
 
 protected:
     // Operations

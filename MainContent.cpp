@@ -79,6 +79,28 @@ void MainContent::setSize(int size)
  * PUBLIC
  *  Operations
  */
+void MainContent::onRotateL()
+{
+    foreach (Image* image, _images)
+    {
+        if (image->isSelected())
+        {
+            image->setRotation(-90);
+        }
+    }
+}
+
+void MainContent::onRotateR()
+{
+    foreach (Image* image, _images)
+    {
+        if (image->isSelected())
+        {
+            image->setRotation(+90);
+        }
+    }
+}
+
 void MainContent::onThumbsUp()
 {
     foreach (Image* image, _images)

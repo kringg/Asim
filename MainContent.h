@@ -12,6 +12,8 @@ public:
     virtual void setPath(QString& path);
     virtual void setSize(int size);
 
+    virtual void onRotateL();
+    virtual void onRotateR();
     virtual void onThumbsUp();
     virtual void onThumbsDown();
     virtual void onViewMode(int viewMode);

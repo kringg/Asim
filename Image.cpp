@@ -4,8 +4,8 @@
 
 Image::Image(ImagePath& imgPath, QWidget* parent) :
     _isThumbsUp(!imgPath.isHidden()),
-    _imgPathThumbsUp(imgPath.getPathThumbsUp()),
-    _imgPathThumbsDown(imgPath.getPathThumbsDown()),
+    _pathThumbsUp(imgPath.getPathThumbsUp()),
+    _pathThumbsDown(imgPath.getPathThumbsDown()),
     _thumbnail(new QThumbnail(imgPath, parent))
 {
     // Empty...
@@ -45,7 +45,7 @@ void Image::setThumbsUp()
     {
         _isThumbsUp = true;
         _thumbnail->setIsRejected(false);
-        QDir().rename(_imgPathThumbsDown, _imgPathThumbsUp);
+        QDir().rename(_pathThumbsDown, _pathThumbsUp);
     }
 }
 
@@ -55,11 +55,24 @@ void Image::setThumbsDown()
     {
         _isThumbsUp = false;
         _thumbnail->setIsRejected(true);
-        QDir().rename(_imgPathThumbsUp, _imgPathThumbsDown);
+        QDir().rename(_pathThumbsUp, _pathThumbsDown);
     }
 }
 
+void Image::setRotation(int rotation)
+{
+    QString path = (_isThumbsUp) ? _pathThumbsUp : _pathThumbsDown;
+    QImage image(path);
+
+    QMatrix matrix;
+    matrix.rotate(rotation);
+
+    _thumbnail->setRotation(matrix);
+    image.transformed(matrix).save(path);
+}
+
+
 void Image::setSelected(bool isSelected)
 {
-    _thumbnail->setSelected(isSelected);
+    _thumbnail->setIsSelected(isSelected);
 }

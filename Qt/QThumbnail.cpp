@@ -23,7 +23,7 @@ QThumbnail::QThumbnail(ImagePath& imgPath, QWidget* parent) :
 
     // Load and init thumbnail
     _pixmap->load(pathThumb);
-    setSelected(false);
+    setIsSelected(false);
     setSizeId(3);
 }
 
@@ -45,13 +45,25 @@ bool QThumbnail::isSelected()
  * PUBLIC
  *  Mutators
  */
+void QThumbnail::setRotation(QMatrix& matrix)
+{
+    *_pixmap = _pixmap->transformed(matrix);
+    setPixmap(pixmap()->transformed(matrix));
+}
+
 void QThumbnail::setSizeId(int sizeId)
 {
     int size = IMAGE_SIZES.at(qMax(1, qMin(5, sizeId)) - 1);
     setPixmap(_pixmap->scaled(size, size, Qt::KeepAspectRatio));
 }
 
-void QThumbnail::setSelected(bool isSelected)
+void QThumbnail::setIsRejected(bool isRejected)
+{
+    _isRejected = isRejected;
+    repaint(); // Force update
+}
+
+void QThumbnail::setIsSelected(bool isSelected)
 {
     if (isSelected)
     {
@@ -62,12 +74,6 @@ void QThumbnail::setSelected(bool isSelected)
         setStyleSheet("border: " + QString::number(BORDER_SIZE) + "px solid rgba(0, 0, 0, 0);");
     }
     _isSelected = isSelected;
-}
-
-void QThumbnail::setIsRejected(bool isRejected)
-{
-    _isRejected = isRejected;
-    repaint(); // Force update
 }
 
 /*
@@ -91,6 +97,6 @@ void QThumbnail::paintEvent(QPaintEvent* event)
 void QThumbnail::mousePressEvent(QMouseEvent* event)
 {
     bool isSelected = _isSelected;
-    QTimer::singleShot(1, [=](){setSelected(!isSelected);});
+    QTimer::singleShot(1, [=](){setIsSelected(!isSelected);});
     QLabel::mousePressEvent(event);
 }

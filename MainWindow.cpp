@@ -29,10 +29,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Configure unicode emoji buttons
     _gui->btnEdit->setFixedWidth(_gui->btnEdit->height());
+    _gui->btnRotateL->setFixedWidth(_gui->btnRotateL->height());
+    _gui->btnRotateR->setFixedWidth(_gui->btnRotateR->height());
     _gui->btnThumbsUp->setFixedWidth(_gui->btnThumbsUp->height());
     _gui->btnThumbsDown->setFixedWidth(_gui->btnThumbsDown->height());
-    _gui->btnRotateClockwise->setFixedWidth(_gui->btnRotateClockwise->height());
-    _gui->btnRotateCounterClockwise->setFixedWidth(_gui->btnRotateCounterClockwise->height());
 
     // Connect signals and slots
     connect(qApp, &QApplication::aboutToQuit, this, &MainWindow::saveSettings);
@@ -41,6 +41,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(_gui->setRootPath, &QAction::triggered, this, &MainWindow::browseRootPath);
 
     connect(_gui->sliderSize, &QSlider::valueChanged, _content, &MainContent::setSize);
+    connect(_gui->btnRotateL, &QPushButton::clicked, _content, &MainContent::onRotateL);
+    connect(_gui->btnRotateR, &QPushButton::clicked, _content, &MainContent::onRotateR);
     connect(_gui->btnThumbsUp, &QPushButton::clicked, _content, &MainContent::onThumbsUp);
     connect(_gui->btnThumbsDown, &QPushButton::clicked, _content, &MainContent::onThumbsDown);
     connect(_gui->cbViewMode, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), _content, &MainContent::onViewMode);

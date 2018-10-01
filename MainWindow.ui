@@ -72,7 +72,7 @@
             <number>0</number>
            </property>
            <item>
-            <widget class="QPushButton" name="btnRotateClockwise">
+            <widget class="QPushButton" name="btnRotateR">
              <property name="statusTip">
               <string>Rotate selected image(s) 90° clockwise</string>
              </property>
@@ -82,7 +82,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="btnRotateCounterClockwise">
+            <widget class="QPushButton" name="btnRotateL">
              <property name="statusTip">
               <string>Rotate selected image(s) 90° counterclockwise</string>
              </property>
@@ -216,14 +216,14 @@
           </layout>
           <zorder>sliderSize</zorder>
           <zorder>divider1</zorder>
-          <zorder>btnRotateCounterClockwise</zorder>
+          <zorder>btnRotateL</zorder>
           <zorder>cbEditMode</zorder>
           <zorder>btnEdit</zorder>
           <zorder>cbViewMode</zorder>
           <zorder>btnThumbsUp</zorder>
           <zorder>diveder2</zorder>
           <zorder>divider0</zorder>
-          <zorder>btnRotateClockwise</zorder>
+          <zorder>btnRotateR</zorder>
           <zorder>btnThumbsDown</zorder>
          </widget>
         </item>
