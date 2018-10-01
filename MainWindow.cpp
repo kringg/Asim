@@ -2,6 +2,7 @@
 #include <QFileDialog>
 #include <QFileSystemModel>
 #include <QStandardPaths>
+#include <QSettings>
 #include "MainWindow.h"
 #include "MainContent.h"
 #include "ui_MainWindow.h"
@@ -38,10 +39,15 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(_gui->treeView, &QTreeView::clicked, this, &MainWindow::setTreeIndex);
     connect(_gui->setRootPath, &QAction::triggered, this, &MainWindow::browseRootPath);
 
+    connect(qApp, &QApplication::aboutToQuit, this, &MainWindow::saveSettings);
+
     connect(_gui->sliderSize, &QSlider::valueChanged, _content, &MainContent::setSize);
     connect(_gui->btnThumbsUp, &QPushButton::clicked, _content, &MainContent::onThumbsUp);
     connect(_gui->btnThumbsDown, &QPushButton::clicked, _content, &MainContent::onThumbsDown);
     connect(_gui->cbViewMode, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), _content, &MainContent::onViewMode);
+
+    //
+    loadSettings();
 }
 
 MainWindow::~MainWindow()
@@ -49,6 +55,35 @@ MainWindow::~MainWindow()
     delete _gui;
     delete _content;
     delete _treeModel;
+}
+
+/*
+ *
+ */
+void MainWindow::loadSettings()
+{
+    QSettings settings("ASIM", "MainWindow");
+
+    QVariant path = settings.value("path");
+    if (path.isValid())
+    {
+        setRootPath(path.toString());
+    }
+
+    QVariant size0 = settings.value("size0");
+    QVariant size1 = settings.value("size1");
+    if (size0.isValid() && size1.isValid())
+    {
+        _gui->splitter->setSizes(QList<int>() << size0.toInt() << size1.toInt());
+    }
+}
+
+void MainWindow::saveSettings()
+{
+    QSettings settings("ASIM", "MainWindow");
+    settings.setValue("path",  _treeModel->rootPath());
+    settings.setValue("size0", _gui->splitter->sizes()[0]);
+    settings.setValue("size1", _gui->splitter->sizes()[1]);
 }
 
 /*
@@ -75,15 +110,12 @@ void MainWindow::setRootPath(QString rootPath)
         _treeModel->setRootPath(rootPath);
         _treeModel->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
         _gui->treeView->setRootIndex(_treeModel->index(rootPath));
-
-        // Resize split-screen components
-        int splitX0 = _gui->treeView->width() * 2;
-        int splitX1 = QMainWindow::width() - splitX0;
-        _gui->splitter->setSizes(QList<int>() << splitX0 << splitX1);
     }
 }
 
 void MainWindow::setTreeIndex(QModelIndex index)
 {
+    _gui->treeView->setEnabled(false);
     _content->setPath(_treeModel->filePath(index));
+    _gui->treeView->setEnabled(true);
 }

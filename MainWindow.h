@@ -19,6 +19,10 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     virtual ~MainWindow();
 
+protected:
+    virtual void loadSettings();
+    virtual void saveSettings();
+
 protected slots:
     virtual void browseRootPath();
     virtual void setRootPath(QString rootPath);
