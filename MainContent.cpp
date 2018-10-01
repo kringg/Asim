@@ -46,10 +46,13 @@ void MainContent::setPath(QString& path)
         QDir().mkdir(path + "/" + ImagePath::DIR_HIDDEN);
         QDir().mkdir(path + "/" + ImagePath::DIR_THUMBS);
 
-        // Build file list
+        // File dirs
         QDir dir0(path);
         QDir dir1(path + "/" + ImagePath::DIR_HIDDEN);
-        QFileInfoList infos = dir0.entryInfoList(nameFilters, QDir::Files);
+
+        // Image files
+        QFileInfoList infos;
+        infos.append(dir0.entryInfoList(nameFilters, QDir::Files));
         infos.append(dir1.entryInfoList(nameFilters, QDir::Files));
 
         // Load content from disk
