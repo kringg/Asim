@@ -2,6 +2,7 @@
 #define QTHUMBNAIL_H
 
 #include <QLabel>
+#include "ImagePath.h"
 
 /*
  *
@@ -9,7 +10,7 @@
 class QThumbnail : public QLabel
 {
 public:
-    QThumbnail(QString& file, QWidget* parent);
+    QThumbnail(ImagePath& imgPath, QWidget* parent);
     virtual ~QThumbnail();
 
     // Accessors

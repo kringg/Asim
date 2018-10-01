@@ -42,16 +42,25 @@ void MainContent::setPath(QString& path)
             }
         }
 
-        // Load content
-        QDir dir(path);
-        QFileInfoList infos = dir.entryInfoList(nameFilters, QDir::Files);
+        // Ensure system paths exist
+        QDir().mkdir(path + "/" + ImagePath::DIR_HIDDEN);
+        QDir().mkdir(path + "/" + ImagePath::DIR_THUMBS);
+
+        // Build file list
+        QDir dir0(path);
+        QDir dir1(path + "/" + ImagePath::DIR_HIDDEN);
+        QFileInfoList infos = dir0.entryInfoList(nameFilters, QDir::Files);
+        infos.append(dir1.entryInfoList(nameFilters, QDir::Files));
+
+        // Load content from disk
         foreach (QFileInfo info, infos)
         {
-            Image* image = new Image(info.absoluteFilePath(), this);
+            Image* image = new Image(ImagePath(info), this);
             _layout->addWidget(image->getThumbnail());
             _images.append(image);
             qApp->processEvents();
         }
+        onViewMode(-1);
     }
 }
 

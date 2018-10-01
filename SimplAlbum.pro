@@ -18,13 +18,13 @@ SOURCES += main.cpp\
     Qt/QFlowLayout.cpp \
     Qt/QThumbnail.cpp \
     Image.cpp \
-    Config.cpp
+    ImagePath.cpp
 
 HEADERS  += MainWindow.h \
     MainContent.h \
     Qt/QFlowLayout.h \
     Qt/QThumbnail.h \
     Image.h \
-    Config.h
+    ImagePath.h
 
 FORMS    += MainWindow.ui

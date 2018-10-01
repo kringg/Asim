@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QWidget>
+#include "ImagePath.h"
 
 /*
  *
@@ -10,7 +11,7 @@
 class Image
 {
 public:
-    Image(QString& imgPath, QWidget* parent = nullptr);
+    Image(ImagePath& imgPath, QWidget* parent = nullptr);
 
     // Accessors
     virtual bool isSelected();
@@ -25,6 +26,8 @@ public:
 
 private:
     bool _isThumbsUp;
+    QString _imgPathThumbsUp;
+    QString _imgPathThumbsDown;
     class QThumbnail* _thumbnail;
 };
 

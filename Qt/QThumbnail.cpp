@@ -1,33 +1,28 @@
-#include <QDir>
 #include <QTimer>
 #include <QPainter>
-#include <QFileInfo>
 #include "QThumbnail.h"
 
 const int QThumbnail::BORDER_SIZE = 2;
 const QList<int> QThumbnail::IMAGE_SIZES = {64, 128, 196, 256, 320};
 
-QThumbnail::QThumbnail(QString& file, QWidget* parent) :
+QThumbnail::QThumbnail(ImagePath& imgPath, QWidget* parent) :
     QLabel(parent),
-    _isRejected(false),
+    _isRejected(imgPath.isHidden()),
     _isSelected(false),
     _pixmap(new QPixmap())
 {
-    QFileInfo info(file);
-    QString thumbPath = info.path() + "/.thumbs";
-    QString thumbFile = thumbPath + "/" + info.fileName();
-    QDir().mkpath(thumbPath); // Create thumbnail directory
+    QString pathThumb = imgPath.getPathThumbnail();
 
     // Does a thumbnail already exist?
-    if (!QFileInfo(thumbFile).exists())
+    if (!QFileInfo(pathThumb).exists())
     {
         // No, create it
-        QImage image(file);
-        image.scaled(512, 512, Qt::KeepAspectRatio).save(thumbFile);
+        QImage image(imgPath.getPath());
+        image.scaled(512, 512, Qt::KeepAspectRatio).save(pathThumb);
     }
 
     // Load and init thumbnail
-    _pixmap->load(thumbFile);
+    _pixmap->load(pathThumb);
     setSelected(false);
     setSizeId(3);
 }

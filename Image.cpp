@@ -1,11 +1,14 @@
+#include <QDir>
 #include "Image.h"
 #include "Qt/QThumbnail.h"
 
-Image::Image(QString& imgPath, QWidget* parent) :
-    _isThumbsUp(true),
+Image::Image(ImagePath& imgPath, QWidget* parent) :
+    _isThumbsUp(!imgPath.isHidden()),
+    _imgPathThumbsUp(imgPath.getPathThumbsUp()),
+    _imgPathThumbsDown(imgPath.getPathThumbsDown()),
     _thumbnail(new QThumbnail(imgPath, parent))
 {
-
+    // Empty...
 }
 
 /*
@@ -38,14 +41,22 @@ QThumbnail* Image::getThumbnail()
  */
 void Image::setThumbsUp()
 {
-    _isThumbsUp = true;
-    _thumbnail->setIsRejected(false);
+    if (!_isThumbsUp)
+    {
+        _isThumbsUp = true;
+        _thumbnail->setIsRejected(false);
+        QDir().rename(_imgPathThumbsDown, _imgPathThumbsUp);
+    }
 }
 
 void Image::setThumbsDown()
 {
-    _isThumbsUp = false;
-    _thumbnail->setIsRejected(true);
+    if (_isThumbsUp)
+    {
+        _isThumbsUp = false;
+        _thumbnail->setIsRejected(true);
+        QDir().rename(_imgPathThumbsUp, _imgPathThumbsDown);
+    }
 }
 
 void Image::setSelected(bool isSelected)
