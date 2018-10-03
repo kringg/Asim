@@ -9,20 +9,19 @@ QThumbnail::QThumbnail(ImagePath& imgPath, QWidget* parent) :
     QLabel(parent),
     _isRejected(imgPath.isHidden()),
     _isSelected(false),
-    _pixmap(new QPixmap())
+    _pixmap(new QPixmap()),
+    _pathThumb(imgPath.getPathThumbnail())
 {
-    QString pathThumb = imgPath.getPathThumbnail();
-
     // Does a thumbnail already exist?
-    if (!QFileInfo(pathThumb).exists())
+    if (!QFileInfo(_pathThumb).exists())
     {
         // No, create it
         QImage image(imgPath.getPath());
-        image.scaled(512, 512, Qt::KeepAspectRatio).save(pathThumb);
+        image.scaled(512, 512, Qt::KeepAspectRatio).save(_pathThumb);
     }
 
     // Load and init thumbnail
-    _pixmap->load(pathThumb);
+    _pixmap->load(_pathThumb);
     setIsSelected(false);
     setSizeId(3);
 }
@@ -47,6 +46,7 @@ bool QThumbnail::isSelected()
  */
 void QThumbnail::setRotation(QMatrix& matrix)
 {
+    QFile(_pathThumb).remove();
     *_pixmap = _pixmap->transformed(matrix);
     setPixmap(pixmap()->transformed(matrix));
 }

@@ -31,6 +31,7 @@ private:
     bool _isRejected;
     bool _isSelected;
     QPixmap* _pixmap;
+    QString _pathThumb;
 
     static const int BORDER_SIZE;
     static const QList<int> IMAGE_SIZES;

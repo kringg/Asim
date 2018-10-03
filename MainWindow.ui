@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Asim Photo Album</string>
+   <string>SimplAlbum Image Manager</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -246,6 +246,7 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="resetSettings"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -260,6 +261,11 @@
   <action name="setRootPath">
    <property name="text">
     <string>Set Root Path</string>
+   </property>
+  </action>
+  <action name="resetSettings">
+   <property name="text">
+    <string>Reset</string>
    </property>
   </action>
  </widget>
