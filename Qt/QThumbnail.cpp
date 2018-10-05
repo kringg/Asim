@@ -1,3 +1,4 @@
+#include <QtConcurrent/QtConcurrent>
 #include <QTimer>
 #include <QPainter>
 #include "QThumbnail.h"
@@ -12,18 +13,22 @@ QThumbnail::QThumbnail(ImagePath& imgPath, QWidget* parent) :
     _pixmap(new QPixmap()),
     _pathThumb(imgPath.getPathThumbnail())
 {
-    // Does a thumbnail already exist?
-    if (!QFileInfo(_pathThumb).exists())
+    QFuture<void> future = QtConcurrent::run([=]()
     {
-        // No, create it
-        QImage image(imgPath.getPath());
-        image.scaled(512, 512, Qt::KeepAspectRatio).save(_pathThumb);
-    }
+        // Does a thumbnail already exist?
+        if (!QFileInfo(_pathThumb).exists())
+        {
+            // No, create it
+            QImage image(imgPath.getPath());
+            image.scaled(512, 512, Qt::KeepAspectRatio).save(_pathThumb);
+        }
 
-    // Load and init thumbnail
-    _pixmap->load(_pathThumb);
-    setIsSelected(false);
-    setSizeId(3);
+        // Load and init thumbnail
+        _pixmap->load(_pathThumb);
+        setIsSelected(false);
+        setSizeId(3);
+    });
+    future.waitForFinished();
 }
 
 QThumbnail::~QThumbnail()

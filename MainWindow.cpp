@@ -217,11 +217,13 @@ void MainWindow::setTreeIndex(QModelIndex index)
     // Disable interactive elements
     _gui->control->setEnabled(false);
     _gui->treeView->setEnabled(false);
+    _gui->scrollArea->setEnabled(false);
 
     // Update root path (reloads content from disk)
     _content->setPath(_treeModel->filePath(index));
 
     // Re-Enable interactive elements
+    _gui->scrollArea->setEnabled(true);
     _gui->treeView->setEnabled(true);
     _gui->control->setEnabled(true);
 }

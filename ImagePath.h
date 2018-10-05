@@ -16,11 +16,11 @@ public:
     virtual ~ImagePath() = default;
 
     // Accessors
-    virtual bool isHidden();
-    virtual QString getPath();
-    virtual QString getPathThumbsUp();
-    virtual QString getPathThumbsDown();
-    virtual QString getPathThumbnail();
+    virtual bool isHidden() const;
+    virtual QString getPath() const;
+    virtual QString getPathThumbsUp() const;
+    virtual QString getPathThumbsDown() const;
+    virtual QString getPathThumbnail() const;
 
 protected:
     static const QString DIR_HIDDEN;

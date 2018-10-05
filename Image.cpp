@@ -1,3 +1,4 @@
+#include <QtConcurrent/QtConcurrent>
 #include <QDir>
 #include "Image.h"
 #include "Qt/QThumbnail.h"
@@ -61,14 +62,17 @@ void Image::setThumbsDown()
 
 void Image::setRotation(int rotation)
 {
-    QString path = (_isThumbsUp) ? _pathThumbsUp : _pathThumbsDown;
-    QImage image(path);
+    QtConcurrent::run([=]()
+    {
+        QString path = (_isThumbsUp) ? _pathThumbsUp : _pathThumbsDown;
+        QImage image(path);
 
-    QMatrix matrix;
-    matrix.rotate(rotation);
+        QMatrix matrix;
+        matrix.rotate(rotation);
 
-    _thumbnail->setRotation(matrix);
-    image.transformed(matrix).save(path);
+        _thumbnail->setRotation(matrix);
+        image.transformed(matrix).save(path);
+    });
 }
 
 

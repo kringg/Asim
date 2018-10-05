@@ -2,6 +2,7 @@
 #include <QDir>
 #include <QTimer>
 #include <QMessageBox>
+#include <QProgressDialog>
 #include <QImageReader>
 #include "Qt/QFlowLayout.h"
 #include "Qt/QThumbnail.h"
@@ -60,14 +61,21 @@ void MainContent::setPath(QString& path)
         infos.append(dir0.entryInfoList(nameFilters, QDir::Files));
         infos.append(dir1.entryInfoList(nameFilters, QDir::Files));
 
+        // Build progress dialog
+        QProgressDialog progress("Generating / reading thumbnail cache...", QString(), 0, infos.size());
+        progress.setCancelButton(nullptr);
+        progress.setWindowModality(Qt::ApplicationModal);
+
         // Load content from disk
         foreach (QFileInfo info, infos)
         {
+            progress.setValue(progress.value() + 1);
             Image* image = new Image(ImagePath(info), this);
             _layout->addWidget(image->getThumbnail());
             _images.append(image);
             qApp->processEvents();
         }
+        progress.setValue(infos.size());
         onViewMode(-1);
     }
 }

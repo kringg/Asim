@@ -30,27 +30,27 @@ ImagePath::ImagePath(QFileInfo info) :
  * PUBLIC
  *  Accessors
  */
-bool ImagePath::isHidden()
+bool ImagePath::isHidden() const
 {
     return _isHidden;
 }
 
-QString ImagePath::getPath()
+QString ImagePath::getPath() const
 {
     return _path;
 }
 
-QString ImagePath::getPathThumbsUp()
+QString ImagePath::getPathThumbsUp() const
 {
     return _pathThumbsUp;
 }
 
-QString ImagePath::getPathThumbsDown()
+QString ImagePath::getPathThumbsDown() const
 {
     return _pathThumbsDown;
 }
 
-QString ImagePath::getPathThumbnail()
+QString ImagePath::getPathThumbnail() const
 {
     return _pathThumbnail;
 }
