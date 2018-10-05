@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <QDir>
 #include <QTimer>
+#include <QMessageBox>
 #include <QImageReader>
 #include "Qt/QFlowLayout.h"
 #include "Qt/QThumbnail.h"
@@ -18,6 +19,10 @@ MainContent::~MainContent()
     delete _layout;
 }
 
+/*
+ * PUBLIC
+ *  Mutators
+ */
 void MainContent::setPath(QString& path)
 {
     if (_lastPath != path)
@@ -79,6 +84,34 @@ void MainContent::setSize(int size)
  * PUBLIC
  *  Operations
  */
+void MainContent::onReset()
+{
+    // Validate paths
+    QDir dir0(_lastPath);
+    QDir dir1(_lastPath + "/" + ImagePath::DIR_THUMBS);
+
+    // Recursively remove thumbs path
+    if (dir0.exists() && dir1.exists())
+    {
+        QMessageBox::StandardButton reply = QMessageBox::question(this, "Confirm Reset Cache?",
+                                                                  "This will purge all (auto-generated) thumbnails for the current album. "
+                                                                  "This action cannot be undone, but the thumbnails can always be rebuilt. "
+                                                                  "Are you sure you want to continue?",
+                                                                  QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::Yes)
+        {
+            dir1.removeRecursively();
+        }
+    }
+    else
+    {
+        QMessageBox::information(this, "Can't Reset Cache",
+                                 "No albums are currently loaded, so there's no thumbnail cache to reset. "
+                                 "You must first select an album (directory) from the tree on the left.",
+                                 QMessageBox::Ok);
+    }
+}
+
 void MainContent::onRotateL()
 {
     foreach (Image* image, _images)
@@ -152,7 +185,8 @@ void MainContent::onViewMode(int viewMode)
 }
 
 /*
- *
+ * PROTECTED
+ *  Operations
  */
 void MainContent::mousePressEvent(QMouseEvent* event)
 {

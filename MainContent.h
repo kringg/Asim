@@ -9,9 +9,12 @@ public:
     MainContent();
     virtual ~MainContent();
 
+    // Mutators
     virtual void setPath(QString& path);
     virtual void setSize(int size);
 
+    // Operations
+    virtual void onReset();
     virtual void onRotateL();
     virtual void onRotateR();
     virtual void onThumbsUp();
@@ -19,6 +22,7 @@ public:
     virtual void onViewMode(int viewMode);
 
 protected:
+    // Operations
     virtual void mousePressEvent(QMouseEvent* event) override;
 
 private:

@@ -41,19 +41,21 @@ MainWindow::MainWindow(QWidget *parent) :
     // Connect signals and slots
     connect(qApp, &QApplication::aboutToQuit, [=](){ saveSettings(SETTINGS_FILE_NAME); });
 
+    connect(_gui->actionExit, &QAction::triggered, qApp, &QApplication::quit);
     connect(_gui->actionLoad, &QAction::triggered, [=](){ loadSettings(); });
     connect(_gui->actionSave, &QAction::triggered, [=](){ saveSettings(); });
     connect(_gui->actionSetRootPath, &QAction::triggered, [=](){ setRootPath(); });
     connect(_gui->actionResetConfig, &QAction::triggered, [=](){ resetSettings(SETTINGS_FILE_NAME); });
     connect(_gui->treeView, &QTreeView::clicked, this, &MainWindow::setTreeIndex);
 
-    connect(_gui->treeView, &QTreeView::clicked, this, &MainWindow::setTreeIndex);
-    connect(_gui->sliderSize, &QSlider::valueChanged, _content, &MainContent::setSize);
+    connect(_gui->actionResetCache, &QAction::triggered, _content, &MainContent::onReset);
     connect(_gui->btnRotateL, &QPushButton::clicked, _content, &MainContent::onRotateL);
     connect(_gui->btnRotateR, &QPushButton::clicked, _content, &MainContent::onRotateR);
     connect(_gui->btnThumbsUp, &QPushButton::clicked, _content, &MainContent::onThumbsUp);
     connect(_gui->btnThumbsDown, &QPushButton::clicked, _content, &MainContent::onThumbsDown);
     connect(_gui->cbViewMode, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), _content, &MainContent::onViewMode);
+    connect(_gui->sliderSize, &QSlider::valueChanged, _content, &MainContent::setSize);
+    connect(_gui->treeView, &QTreeView::clicked, this, &MainWindow::setTreeIndex);
 
     // Configuration
     loadSettings(SETTINGS_FILE_NAME);
@@ -96,6 +98,11 @@ void MainWindow::loadSettings(QString fileName)
     if (size0.isValid() && size1.isValid())
     {
         _gui->splitter->setSizes(QList<int>() << size0.toInt() << size1.toInt());
+    }
+    else
+    {
+        static const int defaultSize = 150;
+        _gui->splitter->setSizes(QList<int>() << defaultSize << width() - defaultSize);
     }
 
     QVariant winM = settings.value("MainWindow/winM");

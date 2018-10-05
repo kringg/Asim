@@ -62,6 +62,9 @@
         </item>
         <item>
          <widget class="QWidget" name="control" native="true">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,0,1,0,0,0,1,0,0,1">
            <property name="leftMargin">
             <number>0</number>
