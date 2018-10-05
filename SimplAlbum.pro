@@ -4,27 +4,35 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT += core gui widgets
 
 TARGET = SimplAlbum
 TEMPLATE = app
 
-
-SOURCES += main.cpp\
-        MainWindow.cpp \
+SOURCES += \
+    Image.cpp \
+    ImagePath.cpp \
+    main.cpp\
     MainContent.cpp \
+    MainWindow.cpp \
     Qt/QFlowLayout.cpp \
     Qt/QThumbnail.cpp \
-    Image.cpp \
-    ImagePath.cpp
 
-HEADERS  += MainWindow.h \
+HEADERS += \
+    Image.h \
+    ImagePath.h \
     MainContent.h \
+    MainWindow.h \
     Qt/QFlowLayout.h \
     Qt/QThumbnail.h \
-    Image.h \
-    ImagePath.h
 
-FORMS    += MainWindow.ui
+FORMS += \
+    MainWindow.ui
+
+RESOURCES += \
+    Resources/Resources.qrc
+
+DISTFILES +=
+
+RC_FILE += \
+    Resources/Resources.rc

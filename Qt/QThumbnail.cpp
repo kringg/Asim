@@ -2,7 +2,7 @@
 #include <QPainter>
 #include "QThumbnail.h"
 
-const int QThumbnail::BORDER_SIZE = 2;
+const int QThumbnail::BORDER_SIZE = 5;
 const QList<int> QThumbnail::IMAGE_SIZES = {64, 128, 196, 256, 320};
 
 QThumbnail::QThumbnail(ImagePath& imgPath, QWidget* parent) :
@@ -67,7 +67,11 @@ void QThumbnail::setIsSelected(bool isSelected)
 {
     if (isSelected)
     {
-        setStyleSheet("border: " + QString::number(BORDER_SIZE) + "px solid rgba(0, 0, 0, 1);");
+        //setStyleSheet("border: " + QString::number(BORDER_SIZE) + "px solid rgba(159, 246, 255, 255);");
+        //setStyleSheet("border: " + QString::number(BORDER_SIZE) + "px solid rgba(121, 197, 255, 255);");
+        setStyleSheet("border: " + QString::number(BORDER_SIZE) + "px solid rgba( 94, 149, 255, 255);");
+        //setStyleSheet("border: " + QString::number(BORDER_SIZE) + "px solid rgba( 67,  91, 255, 255);");
+        //setStyleSheet("border: " + QString::number(BORDER_SIZE) + "px solid rgba( 59,  48, 255, 255);");
     }
     else
     {

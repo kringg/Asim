@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>SimplAlbum Image Manager</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="Resources/Resources.qrc">
+    <normaloff>:/icon.png</normaloff>:/icon.png</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
@@ -246,30 +250,58 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="resetSettings"/>
+    <addaction name="actionLoad"/>
+    <addaction name="actionSave"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
      <string>Edit</string>
     </property>
-    <addaction name="setRootPath"/>
+    <addaction name="actionSetRootPath"/>
+    <addaction name="separator"/>
+    <addaction name="actionResetCache"/>
+    <addaction name="actionResetConfig"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="setRootPath">
+  <action name="actionSetRootPath">
    <property name="text">
     <string>Set Root Path</string>
    </property>
   </action>
-  <action name="resetSettings">
+  <action name="actionLoad">
    <property name="text">
-    <string>Reset</string>
+    <string>Load Config</string>
+   </property>
+  </action>
+  <action name="actionResetCache">
+   <property name="text">
+    <string>Reset Cache</string>
+   </property>
+  </action>
+  <action name="actionResetConfig">
+   <property name="text">
+    <string>Reset Config</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save Config</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
    </property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="Resources/Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
