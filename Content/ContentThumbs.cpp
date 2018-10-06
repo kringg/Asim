@@ -8,15 +8,15 @@
 #include "Image/Image.h"
 #include "Image/ImageThumb.h"
 #include "Qt/QFlowLayout.h"
-#include "MainContent.h"
+#include "ContentThumbs.h"
 
-MainContent::MainContent() :
+ContentThumbs::ContentThumbs() :
     _layout(new FlowLayout(this))
 {
     setLayout(_layout);
 }
 
-MainContent::~MainContent()
+ContentThumbs::~ContentThumbs()
 {
     delete _layout;
 }
@@ -25,7 +25,7 @@ MainContent::~MainContent()
  * PUBLIC
  *  Mutators
  */
-void MainContent::setPath(QString& path)
+void ContentThumbs::setPath(QString& path)
 {
     if (_lastPath != path)
     {
@@ -77,11 +77,11 @@ void MainContent::setPath(QString& path)
             qApp->processEvents();
         }
         progress.setValue(infos.size());
-        onViewMode(-1);
+        setView(-1);
     }
 }
 
-void MainContent::setSize(int size)
+void ContentThumbs::setSize(int size)
 {
     foreach (Image* image, _images)
     {
@@ -93,7 +93,7 @@ void MainContent::setSize(int size)
  * PUBLIC
  *  Operations
  */
-void MainContent::onReset()
+void ContentThumbs::onReset()
 {
     // Validate paths
     QDir dir0(_lastPath);
@@ -121,7 +121,7 @@ void MainContent::onReset()
     }
 }
 
-void MainContent::onRotateL()
+void ContentThumbs::onRotateL()
 {
     foreach (Image* image, _images)
     {
@@ -132,7 +132,7 @@ void MainContent::onRotateL()
     }
 }
 
-void MainContent::onRotateR()
+void ContentThumbs::onRotateR()
 {
     foreach (Image* image, _images)
     {
@@ -143,7 +143,7 @@ void MainContent::onRotateR()
     }
 }
 
-void MainContent::onThumbsUp()
+void ContentThumbs::onThumbsUp()
 {
     foreach (Image* image, _images)
     {
@@ -152,10 +152,10 @@ void MainContent::onThumbsUp()
             image->setThumbsUp();
         }
     }
-    QTimer::singleShot(TIMEOUT, [=](){ onViewMode(-1); });
+    QTimer::singleShot(TIMEOUT, [=](){ setView(-1); });
 }
 
-void MainContent::onThumbsDown()
+void ContentThumbs::onThumbsDown()
 {
     foreach (Image* image, _images)
     {
@@ -164,18 +164,18 @@ void MainContent::onThumbsDown()
             image->setThumbsDown();
         }
     }
-    QTimer::singleShot(TIMEOUT, [=](){ onViewMode(-1); });
+    QTimer::singleShot(TIMEOUT, [=](){ setView(-1); });
 }
 
-void MainContent::onViewMode(int viewMode)
+void ContentThumbs::setView(int view)
 {
-    static int lastViewMode = 1;
-    viewMode = (viewMode < 0) ? lastViewMode : viewMode;
-    lastViewMode = (viewMode < 0) ? lastViewMode : viewMode;
+    static int lastView = 1;
+    view = (view < 0) ? lastView : view;
+    lastView = (view < 0) ? lastView : view;
 
     foreach (Image* image, _images)
     {
-        switch (viewMode)
+        switch (view)
         {
         case 0:
             image->getThumbnail()->setVisible(true);
@@ -197,7 +197,7 @@ void MainContent::onViewMode(int viewMode)
  * PROTECTED
  *  Operations
  */
-void MainContent::mousePressEvent(QMouseEvent* event)
+void ContentThumbs::mousePressEvent(QMouseEvent* event)
 {
     // Enforce mutually-exclusive selection unless CTRL is active
     if (QApplication::keyboardModifiers() ^ Qt::ControlModifier)

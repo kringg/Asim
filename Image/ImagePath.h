@@ -9,7 +9,7 @@
  */
 class ImagePath
 {
-friend class MainContent;
+friend class ContentThumbs;
 
 public:
     ImagePath(QFileInfo info);

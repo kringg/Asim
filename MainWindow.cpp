@@ -4,8 +4,8 @@
 #include <QStandardPaths>
 #include <QProcess>
 
+#include "Content/Content.h"
 #include "MainWindow.h"
-#include "MainContent.h"
 #include "ui_MainWindow.h"
 
 const QString MainWindow::SETTINGS_FILE_NAME = "SimpliAlbum.ini";
@@ -14,13 +14,14 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     _doSave(true),
     _gui(new Ui::MainWindow()),
-    _content(new MainContent()),
+    _content(new Content()),
     _treeModel(new QFileSystemModel()),
     _treeProxy(new QSortFilterProxyModel())
 {
     // Initialize
     _gui->setupUi(this);
-    _gui->scrollArea->setWidget(_content);
+    _content->initFull(_gui->contentFull);
+    _content->initThumbs(_gui->contentThumbs);
 
     // Configure tree model and proxy
     _treeProxy->setSourceModel(_treeModel);
@@ -47,21 +48,22 @@ MainWindow::MainWindow(QWidget *parent) :
     // Connect signals and slots
     connect(qApp, &QApplication::aboutToQuit, [=](){ saveSettings(SETTINGS_FILE_NAME); });
 
-    connect(_gui->actionExit, &QAction::triggered, qApp, &QApplication::quit);
-    connect(_gui->actionLoad, &QAction::triggered, [=](){ loadSettings(); });
-    connect(_gui->actionSave, &QAction::triggered, [=](){ saveSettings(); });
+    connect(_gui->actionLoad,        &QAction::triggered, [=](){ loadSettings(); });
+    connect(_gui->actionSave,        &QAction::triggered, [=](){ saveSettings(); });
     connect(_gui->actionSetRootPath, &QAction::triggered, [=](){ setRootPath(); });
     connect(_gui->actionResetConfig, &QAction::triggered, [=](){ resetSettings(SETTINGS_FILE_NAME); });
-    connect(_gui->treeView, &QTreeView::clicked, this, &MainWindow::setTreeIndex);
+    connect(_gui->actionExit,        &QAction::triggered, qApp, &QApplication::quit);
+    connect(_gui->treeView,          &QTreeView::clicked, this, &MainWindow::setTreeIndex);
 
-    connect(_gui->actionResetCache, &QAction::triggered, _content, &MainContent::onReset);
-    connect(_gui->btnRotateL, &QPushButton::clicked, _content, &MainContent::onRotateL);
-    connect(_gui->btnRotateR, &QPushButton::clicked, _content, &MainContent::onRotateR);
-    connect(_gui->btnThumbsUp, &QPushButton::clicked, _content, &MainContent::onThumbsUp);
-    connect(_gui->btnThumbsDown, &QPushButton::clicked, _content, &MainContent::onThumbsDown);
-    connect(_gui->cbViewMode, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), _content, &MainContent::onViewMode);
-    connect(_gui->sliderSize, &QSlider::valueChanged, _content, &MainContent::setSize);
-    connect(_gui->treeView, &QTreeView::clicked, this, &MainWindow::setTreeIndex);
+    #define CB_TYPE static_cast<void (QComboBox::*)(int)>
+    connect(_gui->actionResetCache,   &QAction::triggered,              [=](){ _content->onReset(); });
+    connect(_gui->btnRotateL,         &QPushButton::clicked,            [=](){ _content->onRotateL(); });
+    connect(_gui->btnRotateR,         &QPushButton::clicked,            [=](){ _content->onRotateR(); });
+    connect(_gui->btnThumbsUp,        &QPushButton::clicked,            [=](){ _content->onThumbsUp(); });
+    connect(_gui->btnThumbsDown,      &QPushButton::clicked,            [=](){ _content->onThumbsDown(); });
+    connect(_gui->sliderSize,         &QSlider::valueChanged,           [=](int size){ _content->setSize(size); });
+    connect(_gui->cbViewMode, CB_TYPE(&QComboBox::currentIndexChanged), [=](int view){ _content->setView(view); });
+    connect(_gui->treeView,           &QTreeView::clicked, this, &MainWindow::setTreeIndex);
 
     // Configuration
     loadSettings(SETTINGS_FILE_NAME);
@@ -224,13 +226,13 @@ void MainWindow::setTreeIndex(QModelIndex index)
     // Disable interactive elements
     _gui->control->setEnabled(false);
     _gui->treeView->setEnabled(false);
-    _gui->scrollArea->setEnabled(false);
+    _gui->contentThumbs->setEnabled(false);
 
     // Update root path via tree proxy (reloads content from disk)
     _content->setPath(_treeModel->filePath(_treeProxy->mapToSource(index)));
 
     // Re-Enable interactive elements
-    _gui->scrollArea->setEnabled(true);
+    _gui->contentThumbs->setEnabled(true);
     _gui->treeView->setEnabled(true);
     _gui->control->setEnabled(true);
 }

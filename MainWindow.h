@@ -32,7 +32,7 @@ protected slots:
 private:
     bool _doSave;
     Ui::MainWindow *_gui;
-    class MainContent* _content;
+    class Content* _content;
     class QFileSystemModel* _treeModel;
     class QSortFilterProxyModel* _treeProxy;
 

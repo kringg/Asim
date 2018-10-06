@@ -5,16 +5,20 @@ TEMPLATE = app
 
 SOURCES += \
     main.cpp\
-    MainContent.cpp \
     MainWindow.cpp \
+    Content/Content.cpp \
+    Content/ContentFull.cpp \
+    Content/ContentThumbs.cpp \
     Image/Image.cpp \
     Image/ImagePath.cpp \
     Image/ImageThumb.cpp \
     Qt/QFlowLayout.cpp \
 
 HEADERS += \
-    MainContent.h \
     MainWindow.h \
+    Content/Content.h \
+    Content/ContentFull.h \
+    Content/ContentThumbs.h \
     Image/Image.h \
     Image/ImagePath.h \
     Image/ImageThumb.h \

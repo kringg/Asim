@@ -3,15 +3,16 @@
 
 #include <QWidget>
 
-class MainContent : public QWidget
+class ContentThumbs : public QWidget
 {
 public:
-    MainContent();
-    virtual ~MainContent();
+    ContentThumbs();
+    virtual ~ContentThumbs();
 
     // Mutators
     virtual void setPath(QString& path);
     virtual void setSize(int size);
+    virtual void setView(int view);
 
     // Operations
     virtual void onReset();
@@ -19,7 +20,6 @@ public:
     virtual void onRotateR();
     virtual void onThumbsUp();
     virtual void onThumbsDown();
-    virtual void onViewMode(int viewMode);
 
 protected:
     // Operations
