@@ -126,6 +126,7 @@ void ImageThumb::mouseDoubleClickEvent(QMouseEvent* event)
     if (event->button() == Qt::LeftButton)
     {
         _parent->onDoubleClick(_path->getPathImage());
+        QTimer::singleShot(10, [=](){setIsSelected(true);});
     }
     QLabel::mouseDoubleClickEvent(event);
 }

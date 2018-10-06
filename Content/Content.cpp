@@ -63,11 +63,13 @@ void Content::onReset()
 
 void Content::onRotateL()
 {
+    _contentFull->onRotateL();
     _contentThumbs->onRotateL();
 }
 
 void Content::onRotateR()
 {
+    _contentFull->onRotateR();
     _contentThumbs->onRotateR();
 }
 

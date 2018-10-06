@@ -24,6 +24,7 @@ public:
 protected:
     // Operations
     virtual void mousePressEvent(QMouseEvent* event) override;
+    virtual void mouseDoubleClickEvent(QMouseEvent* event) override;
 
 private:
     QString _lastPath;

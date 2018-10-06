@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <QDir>
 #include <QTimer>
+#include <QMouseEvent>
 #include <QMessageBox>
 #include <QProgressDialog>
 #include <QImageReader>
@@ -200,13 +201,30 @@ void ContentThumbs::onThumbsDown()
  */
 void ContentThumbs::mousePressEvent(QMouseEvent* event)
 {
-    // Enforce mutually-exclusive selection unless CTRL is active
-    if (QApplication::keyboardModifiers() ^ Qt::ControlModifier)
+    if (event->button() == Qt::LeftButton)
     {
+        // Enforce mutually-exclusive selection unless CTRL is active
+        if (QApplication::keyboardModifiers() ^ Qt::ControlModifier)
+        {
+            // Deselect all, clicked image will self-select
+            foreach (Image* image, _images)
+            {
+                image->setSelected(false);
+            }
+        }
+    }
+    QWidget::mousePressEvent(event);
+}
+
+void ContentThumbs::mouseDoubleClickEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        // Deselect all, double-clicked image will self-select
         foreach (Image* image, _images)
         {
             image->setSelected(false);
         }
     }
-    QWidget::mousePressEvent(event);
+    QWidget::mouseDoubleClickEvent(event);
 }
