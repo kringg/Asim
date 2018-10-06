@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Initialize
     _gui->setupUi(this);
     _gui->scrollArea->setWidget(_content);
+
     // Configure tree model and proxy
     _treeProxy->setSourceModel(_treeModel);
     _treeProxy->setFilterRegExp("^[^.]*$");

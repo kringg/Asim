@@ -1,10 +1,11 @@
 #include <QtConcurrent/QtConcurrent>
+#include <QImageReader>
 #include <QTimer>
 #include <QPainter>
 #include "QThumbnail.h"
 
 const int QThumbnail::BORDER_SIZE = 5;
-const QList<int> QThumbnail::IMAGE_SIZES = {64, 128, 196, 256, 320};
+const QList<int> QThumbnail::IMAGE_SIZES = {128, 160, 192, 224, 256};
 
 QThumbnail::QThumbnail(ImagePath& imgPath, QWidget* parent) :
     QLabel(parent),
@@ -18,13 +19,27 @@ QThumbnail::QThumbnail(ImagePath& imgPath, QWidget* parent) :
         // Does a thumbnail already exist?
         if (!QFileInfo(_pathThumb).exists())
         {
-            // No, create it
-            QImage image(imgPath.getPath());
-            image.scaled(512, 512, Qt::KeepAspectRatio).save(_pathThumb);
+            // No, configure fast image reader
+            QImageReader reader(imgPath.getPath());
+            QSize size = reader.size();
+            int maxSize = IMAGE_SIZES.last();
+            size.scale(maxSize, maxSize, Qt::KeepAspectRatio);
+            reader.setScaledSize(size);
+
+            // Load small image from disk
+            QImage image = reader.read();
+            image.save(_pathThumb);
+
+            // Populate pixmap with image
+            _pixmap->convertFromImage(image);
+        }
+        else
+        {
+            // Yes, just load thumbnail
+            _pixmap->load(_pathThumb);
         }
 
-        // Load and init thumbnail
-        _pixmap->load(_pathThumb);
+        // Initialize thumbnail
         setIsSelected(false);
         setSizeId(3);
     });
