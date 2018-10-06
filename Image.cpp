@@ -1,13 +1,13 @@
 #include <QtConcurrent/QtConcurrent>
 #include <QDir>
 #include "Image.h"
-#include "Qt/QThumbnail.h"
+#include "ImageThumb.h"
 
 Image::Image(ImagePath& imgPath, QWidget* parent) :
     _isThumbsUp(!imgPath.isHidden()),
     _pathThumbsUp(imgPath.getPathThumbsUp()),
     _pathThumbsDown(imgPath.getPathThumbsDown()),
-    _thumbnail(new QThumbnail(imgPath, parent))
+    _thumbnail(new ImageThumb(imgPath, parent))
 {
     // Empty...
 }
@@ -31,7 +31,7 @@ bool Image::isThumbsDown()
     return !_isThumbsUp;
 }
 
-QThumbnail* Image::getThumbnail()
+ImageThumb* Image::getThumbnail()
 {
     return _thumbnail;
 }

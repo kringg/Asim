@@ -12,19 +12,19 @@ TEMPLATE = app
 SOURCES += \
     Image.cpp \
     ImagePath.cpp \
+    ImageThumb.cpp \
     main.cpp\
     MainContent.cpp \
     MainWindow.cpp \
     Qt/QFlowLayout.cpp \
-    Qt/QThumbnail.cpp \
 
 HEADERS += \
     Image.h \
     ImagePath.h \
+    ImageThumb.h \
     MainContent.h \
     MainWindow.h \
     Qt/QFlowLayout.h \
-    Qt/QThumbnail.h \
 
 FORMS += \
     MainWindow.ui

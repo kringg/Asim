@@ -5,7 +5,7 @@
 #include <QProgressDialog>
 #include <QImageReader>
 #include "Qt/QFlowLayout.h"
-#include "Qt/QThumbnail.h"
+#include "ImageThumb.h"
 #include "MainContent.h"
 #include "Image.h"
 

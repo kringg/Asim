@@ -17,7 +17,7 @@ public:
     virtual bool isSelected();
     virtual bool isThumbsUp();
     virtual bool isThumbsDown();
-    virtual class QThumbnail* getThumbnail();
+    virtual class ImageThumb* getThumbnail();
 
     // Mutators
     virtual void setThumbsUp();
@@ -29,7 +29,7 @@ private:
     bool _isThumbsUp;
     QString _pathThumbsUp;
     QString _pathThumbsDown;
-    class QThumbnail* _thumbnail;
+    class ImageThumb* _thumbnail;
 };
 
 #endif // IMAGE_H

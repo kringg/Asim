@@ -1,5 +1,5 @@
-#ifndef QTHUMBNAIL_H
-#define QTHUMBNAIL_H
+#ifndef IMAGETHUMB_H
+#define IMAGETHUMB_H
 
 #include <QLabel>
 #include "ImagePath.h"
@@ -7,11 +7,11 @@
 /*
  *
  */
-class QThumbnail : public QLabel
+class ImageThumb : public QLabel
 {
 public:
-    QThumbnail(ImagePath& imgPath, QWidget* parent);
-    virtual ~QThumbnail();
+    ImageThumb(ImagePath& imgPath, QWidget* parent);
+    virtual ~ImageThumb();
 
     // Accessors
     virtual bool isSelected();
@@ -37,4 +37,4 @@ private:
     static const QList<int> IMAGE_SIZES;
 };
 
-#endif // QTHUMBNAIL_H
+#endif // IMAGETHUMB_H

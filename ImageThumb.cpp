@@ -1,52 +1,47 @@
-#include <QtConcurrent/QtConcurrent>
 #include <QImageReader>
 #include <QTimer>
 #include <QPainter>
-#include "QThumbnail.h"
+#include "ImageThumb.h"
 
-const int QThumbnail::BORDER_SIZE = 5;
-const QList<int> QThumbnail::IMAGE_SIZES = {128, 160, 192, 224, 256};
+const int ImageThumb::BORDER_SIZE = 5;
+const QList<int> ImageThumb::IMAGE_SIZES = {128, 160, 192, 224, 256};
 
-QThumbnail::QThumbnail(ImagePath& imgPath, QWidget* parent) :
+ImageThumb::ImageThumb(ImagePath& imgPath, QWidget* parent) :
     QLabel(parent),
     _isRejected(imgPath.isHidden()),
     _isSelected(false),
     _pixmap(new QPixmap()),
     _pathThumb(imgPath.getPathThumbnail())
 {
-    QFuture<void> future = QtConcurrent::run([=]()
+    // Does a thumbnail already exist?
+    if (!QFileInfo(_pathThumb).exists())
     {
-        // Does a thumbnail already exist?
-        if (!QFileInfo(_pathThumb).exists())
-        {
-            // No, configure fast image reader
-            QImageReader reader(imgPath.getPath());
-            QSize size = reader.size();
-            int maxSize = IMAGE_SIZES.last();
-            size.scale(maxSize, maxSize, Qt::KeepAspectRatio);
-            reader.setScaledSize(size);
+        // No, configure fast image reader
+        QImageReader reader(imgPath.getPath());
+        QSize size = reader.size();
+        int maxSize = IMAGE_SIZES.last();
+        size.scale(maxSize, maxSize, Qt::KeepAspectRatio);
+        reader.setScaledSize(size);
 
-            // Load small image from disk
-            QImage image = reader.read();
-            image.save(_pathThumb);
+        // Load small image from disk
+        QImage image = reader.read();
+        image.save(_pathThumb);
 
-            // Populate pixmap with image
-            _pixmap->convertFromImage(image);
-        }
-        else
-        {
-            // Yes, just load thumbnail
-            _pixmap->load(_pathThumb);
-        }
+        // Populate pixmap with image
+        _pixmap->convertFromImage(image);
+    }
+    else
+    {
+        // Yes, just load thumbnail
+        _pixmap->load(_pathThumb);
+    }
 
-        // Initialize thumbnail
-        setIsSelected(false);
-        setSizeId(3);
-    });
-    future.waitForFinished();
+    // Initialize thumbnail
+    setIsSelected(false);
+    setSizeId(3);
 }
 
-QThumbnail::~QThumbnail()
+ImageThumb::~ImageThumb()
 {
     delete _pixmap;
 }
@@ -55,7 +50,7 @@ QThumbnail::~QThumbnail()
  * PUBLIC
  *  Accessors
  */
-bool QThumbnail::isSelected()
+bool ImageThumb::isSelected()
 {
     return _isSelected;
 }
@@ -64,26 +59,26 @@ bool QThumbnail::isSelected()
  * PUBLIC
  *  Mutators
  */
-void QThumbnail::setRotation(QMatrix& matrix)
+void ImageThumb::setRotation(QMatrix& matrix)
 {
     QFile(_pathThumb).remove();
     *_pixmap = _pixmap->transformed(matrix);
     setPixmap(pixmap()->transformed(matrix));
 }
 
-void QThumbnail::setSizeId(int sizeId)
+void ImageThumb::setSizeId(int sizeId)
 {
     int size = IMAGE_SIZES.at(qMax(1, qMin(5, sizeId)) - 1);
     setPixmap(_pixmap->scaled(size, size, Qt::KeepAspectRatio));
 }
 
-void QThumbnail::setIsRejected(bool isRejected)
+void ImageThumb::setIsRejected(bool isRejected)
 {
     _isRejected = isRejected;
     repaint(); // Force update
 }
 
-void QThumbnail::setIsSelected(bool isSelected)
+void ImageThumb::setIsSelected(bool isSelected)
 {
     if (isSelected)
     {
@@ -104,7 +99,7 @@ void QThumbnail::setIsSelected(bool isSelected)
  * PROTECTED
  *  Operations
  */
-void QThumbnail::paintEvent(QPaintEvent* event)
+void ImageThumb::paintEvent(QPaintEvent* event)
 {
     if (_isRejected)
     {
@@ -118,7 +113,7 @@ void QThumbnail::paintEvent(QPaintEvent* event)
     }
 }
 
-void QThumbnail::mousePressEvent(QMouseEvent* event)
+void ImageThumb::mousePressEvent(QMouseEvent* event)
 {
     bool isSelected = _isSelected;
     QTimer::singleShot(1, [=](){setIsSelected(!isSelected);});
