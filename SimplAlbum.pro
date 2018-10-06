@@ -1,29 +1,23 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2018-06-03T22:04:27
-#
-#-------------------------------------------------
-
 QT += core gui widgets
 
 TARGET = SimplAlbum
 TEMPLATE = app
 
 SOURCES += \
-    Image.cpp \
-    ImagePath.cpp \
-    ImageThumb.cpp \
     main.cpp\
     MainContent.cpp \
     MainWindow.cpp \
+    Image/Image.cpp \
+    Image/ImagePath.cpp \
+    Image/ImageThumb.cpp \
     Qt/QFlowLayout.cpp \
 
 HEADERS += \
-    Image.h \
-    ImagePath.h \
-    ImageThumb.h \
     MainContent.h \
     MainWindow.h \
+    Image/Image.h \
+    Image/ImagePath.h \
+    Image/ImageThumb.h \
     Qt/QFlowLayout.h \
 
 FORMS += \

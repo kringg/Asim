@@ -4,10 +4,11 @@
 #include <QMessageBox>
 #include <QProgressDialog>
 #include <QImageReader>
+
+#include "Image/Image.h"
+#include "Image/ImageThumb.h"
 #include "Qt/QFlowLayout.h"
-#include "ImageThumb.h"
 #include "MainContent.h"
-#include "Image.h"
 
 MainContent::MainContent() :
     _layout(new FlowLayout(this))
