@@ -11,11 +11,13 @@ public:
     virtual ~ContentFull() = default;
 
     // Mutators
-    virtual void setImage(QString& fileName);
+    virtual void setImage(class ImagePath* path);
 
     // Operations
     virtual void onRotateL();
     virtual void onRotateR();
+    virtual void onThumbsUp();
+    virtual void onThumbsDown();
 
 protected:
     // Operations
@@ -23,6 +25,7 @@ protected:
     virtual void mouseDoubleClickEvent(QMouseEvent* event) override;
 
 private:
+    float _opacity;
     QPixmap _pixmap;
     class Content* _parent;
 };

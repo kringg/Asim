@@ -2,6 +2,7 @@
 #include <QMouseEvent>
 #include "Content.h"
 #include "ContentFull.h"
+#include "Image/ImagePath.h"
 
 ContentFull::ContentFull(Content* parent) :
     _parent(parent)
@@ -13,9 +14,10 @@ ContentFull::ContentFull(Content* parent) :
  * PUBLIC
  *  Mutators
  */
-void ContentFull::setImage(QString& fileName)
+void ContentFull::setImage(ImagePath* path)
 {
-    _pixmap.load(fileName);
+    _pixmap.load(path->getPathImage());
+    _opacity = (path->isThumbsUp()) ? 1.0 : 0.5;
 }
 
 /*
@@ -38,6 +40,18 @@ void ContentFull::onRotateR()
     repaint();
 }
 
+void ContentFull::onThumbsUp()
+{
+    _opacity = 1.0;
+    repaint();
+}
+
+void ContentFull::onThumbsDown()
+{
+    _opacity = 0.5;
+    repaint();
+}
+
 /*
  * PROTECTED
  *  Operations
@@ -45,6 +59,8 @@ void ContentFull::onRotateR()
 void ContentFull::paintEvent(QPaintEvent* event)
 {
     QPainter painter(this);
+    painter.setOpacity(_opacity);
+
     QSize winSize(width(), height());
     QSize imgSize = _pixmap.size().scaled(winSize, Qt::KeepAspectRatio);
 
@@ -59,6 +75,6 @@ void ContentFull::mouseDoubleClickEvent(QMouseEvent* event)
 {
     if (event->button() == Qt::LeftButton)
     {
-        _parent->onDoubleClick(QString());
+        _parent->onDoubleClick(nullptr);
     }
 }

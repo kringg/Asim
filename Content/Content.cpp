@@ -75,17 +75,19 @@ void Content::onRotateR()
 
 void Content::onThumbsUp()
 {
+    _contentFull->onThumbsUp();
     _contentThumbs->onThumbsUp();
 }
 
 void Content::onThumbsDown()
 {
+    _contentFull->onThumbsDown();
     _contentThumbs->onThumbsDown();
 }
 
-void Content::onDoubleClick(QString& fileName)
+void Content::onDoubleClick(class ImagePath* path)
 {
-    if (fileName.isEmpty())
+    if (path == nullptr)
     {
         //_contentFull->setImage(fileName);
         _scrollAreaFull->setHidden(true);
@@ -93,7 +95,7 @@ void Content::onDoubleClick(QString& fileName)
     }
     else
     {
-        _contentFull->setImage(fileName);
+        _contentFull->setImage(path);
         _scrollAreaFull->setHidden(false);
         _scrollAreaThumbs->setHidden(true);
 

@@ -23,7 +23,7 @@ public:
     virtual void onRotateR();
     virtual void onThumbsUp();
     virtual void onThumbsDown();
-    virtual void onDoubleClick(QString& fileName);
+    virtual void onDoubleClick(class ImagePath* path);
 
 private:
     class ContentFull* _contentFull;
