@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _gui->setupUi(this);
     _content->initFull(_gui->contentFull);
     _content->initThumbs(_gui->contentThumbs);
+    _content->initElements(QList<QWidget*>() << _gui->cbViewMode << _gui->sliderSize);
 
     // Configure tree model and proxy
     _treeProxy->setSourceModel(_treeModel);

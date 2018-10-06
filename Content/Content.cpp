@@ -33,6 +33,11 @@ void Content::initThumbs(QScrollArea* scrollArea)
     scrollArea->setWidget(_contentThumbs);
 }
 
+void Content::initElements(QList<QWidget*> elements)
+{
+    _elements = elements;
+}
+
 /*
  * PUBLIC
  *  Mutators
@@ -89,7 +94,6 @@ void Content::onDoubleClick(class ImagePath* path)
 {
     if (path == nullptr)
     {
-        //_contentFull->setImage(fileName);
         _scrollAreaFull->setHidden(true);
         _scrollAreaThumbs->setHidden(false);
     }
@@ -99,5 +103,10 @@ void Content::onDoubleClick(class ImagePath* path)
         _scrollAreaFull->setHidden(false);
         _scrollAreaThumbs->setHidden(true);
 
+    }
+
+    foreach (QWidget* widget, _elements)
+    {
+        widget->setEnabled(path == nullptr);
     }
 }

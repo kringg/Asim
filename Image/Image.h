@@ -4,7 +4,11 @@
 #include <QFileInfo>
 
 /*
- *
+ * Image
+ *  <|>
+ *   |-- ImagePath
+ *   |
+ *   '-- ImageThumb
  */
 class Image
 {
