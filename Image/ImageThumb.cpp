@@ -9,7 +9,6 @@ const int ImageThumb::BORDER_SIZE = 5;
 const QList<int> ImageThumb::IMAGE_SIZES = {128, 160, 192, 224, 256};
 
 ImageThumb::ImageThumb(ImagePath* imgPath, Content* parent) :
-    _isRejected(imgPath->isHidden()),
     _isSelected(false),
     _parent(parent),
     _pixmap(new QPixmap()),
@@ -77,12 +76,6 @@ void ImageThumb::setSizeId(int sizeId)
     setPixmap(_pixmap->scaled(size, size, Qt::KeepAspectRatio));
 }
 
-void ImageThumb::setIsRejected(bool isRejected)
-{
-    _isRejected = isRejected;
-    repaint(); // Force update
-}
-
 void ImageThumb::setIsSelected(bool isSelected)
 {
     if (isSelected)
@@ -106,15 +99,15 @@ void ImageThumb::setIsSelected(bool isSelected)
  */
 void ImageThumb::paintEvent(QPaintEvent* event)
 {
-    if (_isRejected)
+    if (_path->isThumbsUp())
+    {
+        QLabel::paintEvent(event);
+    }
+    else
     {
         QPainter painter(this);
         painter.setOpacity(0.5);
         painter.drawPixmap(BORDER_SIZE, BORDER_SIZE, *pixmap());
-    }
-    else
-    {
-        QLabel::paintEvent(event);
     }
 }
 

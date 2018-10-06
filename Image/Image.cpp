@@ -21,12 +21,12 @@ bool Image::isSelected()
 
 bool Image::isThumbsUp()
 {
-    return !_path->isHidden();
+    return _path->isThumbsUp();
 }
 
 bool Image::isThumbsDown()
 {
-    return !_path->isHidden();
+    return _path->isThumbsDown();
 }
 
 ImageThumb* Image::getThumbnail()
@@ -40,20 +40,20 @@ ImageThumb* Image::getThumbnail()
  */
 void Image::setThumbsUp()
 {
-    if (_path->isHidden())
+    if (_path->isThumbsDown())
     {
-        _path->setIsHidden(false);
-        _thumb->setIsRejected(false);
+        _path->setThumbsUp();
+        _thumb->repaint(); // Force draw update
         QDir().rename(_path->getPathThumbsDown(), _path->getPathThumbsUp());
     }
 }
 
 void Image::setThumbsDown()
 {
-    if (!_path->isHidden())
+    if (_path->isThumbsUp())
     {
-        _path->setIsHidden(true);
-        _thumb->setIsRejected(true);
+        _path->setThumbsDown();
+        _thumb->repaint(); // Force draw update
         QDir().rename(_path->getPathThumbsUp(), _path->getPathThumbsDown());
     }
 }

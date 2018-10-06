@@ -3,8 +3,7 @@
 const QString ImagePath::DIR_HIDDEN = ".hidden";
 const QString ImagePath::DIR_THUMBS = ".thumbs";
 
-ImagePath::ImagePath(QFileInfo info) :
-    _path(info.absoluteFilePath())
+ImagePath::ImagePath(QFileInfo info)
 {
     QString fileName = info.fileName();
     QString basePath = info.absolutePath();
@@ -30,7 +29,12 @@ ImagePath::ImagePath(QFileInfo info) :
  * PUBLIC
  *  Accessors
  */
-bool ImagePath::isHidden() const
+bool ImagePath::isThumbsUp() const
+{
+    return !_isHidden;
+}
+
+bool ImagePath::isThumbsDown() const
 {
     return _isHidden;
 }
@@ -66,7 +70,12 @@ QString ImagePath::getPathThumbnail() const
  * PUBLIC
  *  Mutators
  */
-void ImagePath::setIsHidden(bool isHidden)
+void ImagePath::setThumbsUp()
 {
-    _isHidden = isHidden;
+    _isHidden = false;
+}
+
+void ImagePath::setThumbsDown()
+{
+    _isHidden = true;
 }

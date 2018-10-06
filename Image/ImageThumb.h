@@ -20,7 +20,6 @@ public:
     // Mutators
     virtual void setRotation(QMatrix&);
     virtual void setSizeId(int sizeId);
-    virtual void setIsRejected(bool isRejected);
     virtual void setIsSelected(bool isSelected);
 
 protected:
@@ -30,7 +29,6 @@ protected:
     virtual void mouseDoubleClickEvent(QMouseEvent* event) override;
 
 private:
-    bool _isRejected;
     bool _isSelected;
     Content* _parent;
     QPixmap* _pixmap;

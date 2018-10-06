@@ -16,14 +16,16 @@ public:
     virtual ~ImagePath() = default;
 
     // Accessors
-    virtual bool isHidden() const;
-    virtual QString getPathImage() const;
-    virtual QString getPathThumbsUp() const;
-    virtual QString getPathThumbsDown() const;
-    virtual QString getPathThumbnail() const;
+    virtual bool isThumbsUp() const; // Is the image thumbs-up? This is the default state
+    virtual bool isThumbsDown() const; // Is the image thumbs-down? This means the image is hidden
+    virtual QString getPathImage() const; // Current full-sized image path, adapts according to thumbs-state
+    virtual QString getPathThumbsUp() const; // Full-sized image path, if image is thumbs-up
+    virtual QString getPathThumbsDown() const; // Full-sized image path, if image is thumbs-down
+    virtual QString getPathThumbnail() const; // Thumbnail-sized image path (constant regardless of thumbs-up or thumbs-down)
 
     // Mutators
-    virtual void setIsHidden(bool isHidden);
+    virtual void setThumbsUp();
+    virtual void setThumbsDown();
 
 protected:
     static const QString DIR_HIDDEN;
@@ -31,7 +33,6 @@ protected:
 
 private:
     bool _isHidden;
-    QString _path;
     QString _pathThumbsUp;
     QString _pathThumbsDown;
     QString _pathThumbnail;
