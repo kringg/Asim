@@ -3,6 +3,7 @@
 
 #include <QLabel>
 #include "ImagePath.h"
+class Content;
 
 /*
  *
@@ -10,7 +11,7 @@
 class ImageThumb : public QLabel
 {
 public:
-    ImageThumb(ImagePath& imgPath, QWidget* parent);
+    ImageThumb(ImagePath* imgPath, Content* parent);
     virtual ~ImageThumb();
 
     // Accessors
@@ -26,12 +27,14 @@ protected:
     // Operations
     virtual void paintEvent(QPaintEvent* event) override;
     virtual void mousePressEvent(QMouseEvent* event) override;
+    virtual void mouseDoubleClickEvent(QMouseEvent* event) override;
 
 private:
     bool _isRejected;
     bool _isSelected;
+    Content* _parent;
     QPixmap* _pixmap;
-    QString _pathThumb;
+    ImagePath* _path;
 
     static const int BORDER_SIZE;
     static const QList<int> IMAGE_SIZES;

@@ -1,23 +1,28 @@
 #include <QImageReader>
+#include <QMouseEvent>
 #include <QTimer>
 #include <QPainter>
+#include "Content/Content.h"
 #include "ImageThumb.h"
 
 const int ImageThumb::BORDER_SIZE = 5;
 const QList<int> ImageThumb::IMAGE_SIZES = {128, 160, 192, 224, 256};
 
-ImageThumb::ImageThumb(ImagePath& imgPath, QWidget* parent) :
-    QLabel(parent),
-    _isRejected(imgPath.isHidden()),
+ImageThumb::ImageThumb(ImagePath* imgPath, Content* parent) :
+    _isRejected(imgPath->isHidden()),
     _isSelected(false),
+    _parent(parent),
     _pixmap(new QPixmap()),
-    _pathThumb(imgPath.getPathThumbnail())
+    _path(imgPath)
 {
+    QString pathImage = _path->getPathImage();
+    QString pathThumb = _path->getPathThumbnail();
+
     // Does a thumbnail already exist?
-    if (!QFileInfo(_pathThumb).exists())
+    if (!QFileInfo(pathThumb).exists())
     {
         // No, configure fast image reader
-        QImageReader reader(imgPath.getPath());
+        QImageReader reader(pathImage);
         QSize size = reader.size();
         int maxSize = IMAGE_SIZES.last();
         size.scale(maxSize, maxSize, Qt::KeepAspectRatio);
@@ -25,7 +30,7 @@ ImageThumb::ImageThumb(ImagePath& imgPath, QWidget* parent) :
 
         // Load small image from disk
         QImage image = reader.read();
-        image.save(_pathThumb);
+        image.save(pathThumb);
 
         // Populate pixmap with image
         _pixmap->convertFromImage(image);
@@ -33,7 +38,7 @@ ImageThumb::ImageThumb(ImagePath& imgPath, QWidget* parent) :
     else
     {
         // Yes, just load thumbnail
-        _pixmap->load(_pathThumb);
+        _pixmap->load(pathThumb);
     }
 
     // Initialize thumbnail
@@ -61,7 +66,7 @@ bool ImageThumb::isSelected()
  */
 void ImageThumb::setRotation(QMatrix& matrix)
 {
-    QFile(_pathThumb).remove();
+    QFile(_path->getPathThumbnail()).remove();
     *_pixmap = _pixmap->transformed(matrix);
     setPixmap(pixmap()->transformed(matrix));
 }
@@ -115,7 +120,19 @@ void ImageThumb::paintEvent(QPaintEvent* event)
 
 void ImageThumb::mousePressEvent(QMouseEvent* event)
 {
-    bool isSelected = _isSelected;
-    QTimer::singleShot(1, [=](){setIsSelected(!isSelected);});
+    if (event->button() == Qt::LeftButton)
+    {
+        bool isSelected = _isSelected;
+        QTimer::singleShot(1, [=](){setIsSelected(!isSelected);});
+    }
     QLabel::mousePressEvent(event);
+}
+
+void ImageThumb::mouseDoubleClickEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        _parent->onDoubleClick(_path->getPathImage());
+    }
+    QLabel::mouseDoubleClickEvent(event);
 }

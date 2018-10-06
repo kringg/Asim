@@ -1,9 +1,7 @@
 #ifndef IMAGE_H
 #define IMAGE_H
 
-#include <QString>
-#include <QWidget>
-#include "ImagePath.h"
+#include <QFileInfo>
 
 /*
  *
@@ -11,7 +9,7 @@
 class Image
 {
 public:
-    Image(ImagePath& imgPath, QWidget* parent = nullptr);
+    Image(QFileInfo& info, class Content* parent);
 
     // Accessors
     virtual bool isSelected();
@@ -26,10 +24,8 @@ public:
     virtual void setSelected(bool);
 
 private:
-    bool _isThumbsUp;
-    QString _pathThumbsUp;
-    QString _pathThumbsDown;
-    class ImageThumb* _thumbnail;
+    class ImagePath* _path;
+    class ImageThumb* _thumb;
 };
 
 #endif // IMAGE_H

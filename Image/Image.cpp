@@ -3,11 +3,9 @@
 #include "Image.h"
 #include "ImageThumb.h"
 
-Image::Image(ImagePath& imgPath, QWidget* parent) :
-    _isThumbsUp(!imgPath.isHidden()),
-    _pathThumbsUp(imgPath.getPathThumbsUp()),
-    _pathThumbsDown(imgPath.getPathThumbsDown()),
-    _thumbnail(new ImageThumb(imgPath, parent))
+Image::Image(QFileInfo& info, Content* parent) :
+    _path(new ImagePath(info)),
+    _thumb(new ImageThumb(_path, parent))
 {
     // Empty...
 }
@@ -18,45 +16,45 @@ Image::Image(ImagePath& imgPath, QWidget* parent) :
  */
 bool Image::isSelected()
 {
-    return _thumbnail->isSelected();
+    return _thumb->isSelected();
 }
 
 bool Image::isThumbsUp()
 {
-    return _isThumbsUp;
+    return !_path->isHidden();
 }
 
 bool Image::isThumbsDown()
 {
-    return !_isThumbsUp;
+    return !_path->isHidden();
 }
 
 ImageThumb* Image::getThumbnail()
 {
-    return _thumbnail;
+    return _thumb;
 }
 
 /*
  * PUBLIC
- *  Mutatos
+ *  Mutators
  */
 void Image::setThumbsUp()
 {
-    if (!_isThumbsUp)
+    if (_path->isHidden())
     {
-        _isThumbsUp = true;
-        _thumbnail->setIsRejected(false);
-        QDir().rename(_pathThumbsDown, _pathThumbsUp);
+        _path->setIsHidden(false);
+        _thumb->setIsRejected(false);
+        QDir().rename(_path->getPathThumbsDown(), _path->getPathThumbsUp());
     }
 }
 
 void Image::setThumbsDown()
 {
-    if (_isThumbsUp)
+    if (!_path->isHidden())
     {
-        _isThumbsUp = false;
-        _thumbnail->setIsRejected(true);
-        QDir().rename(_pathThumbsUp, _pathThumbsDown);
+        _path->setIsHidden(true);
+        _thumb->setIsRejected(true);
+        QDir().rename(_path->getPathThumbsUp(), _path->getPathThumbsDown());
     }
 }
 
@@ -64,19 +62,18 @@ void Image::setRotation(int rotation)
 {
     QtConcurrent::run([=]()
     {
-        QString path = (_isThumbsUp) ? _pathThumbsUp : _pathThumbsDown;
+        QString path = _path->getPathImage();
         QImage image(path);
 
         QMatrix matrix;
         matrix.rotate(rotation);
 
-        _thumbnail->setRotation(matrix);
+        _thumb->setRotation(matrix);
         image.transformed(matrix).save(path);
     });
 }
 
-
 void Image::setSelected(bool isSelected)
 {
-    _thumbnail->setIsSelected(isSelected);
+    _thumb->setIsSelected(isSelected);
 }

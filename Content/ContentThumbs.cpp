@@ -10,7 +10,8 @@
 #include "Qt/QFlowLayout.h"
 #include "ContentThumbs.h"
 
-ContentThumbs::ContentThumbs() :
+ContentThumbs::ContentThumbs(Content* parent) :
+    _parent(parent),
     _layout(new FlowLayout(this))
 {
     setLayout(_layout);
@@ -71,7 +72,7 @@ void ContentThumbs::setPath(QString& path)
         foreach (QFileInfo info, infos)
         {
             progress.setValue(progress.value() + 1);
-            Image* image = new Image(ImagePath(info), this);
+            Image* image = new Image(info, _parent);
             _layout->addWidget(image->getThumbnail());
             _images.append(image);
             qApp->processEvents();
@@ -86,6 +87,32 @@ void ContentThumbs::setSize(int size)
     foreach (Image* image, _images)
     {
         image->getThumbnail()->setSizeId(size);
+    }
+}
+
+void ContentThumbs::setView(int view)
+{
+    static int lastView = 1;
+    view = (view < 0) ? lastView : view;
+    lastView = (view < 0) ? lastView : view;
+
+    foreach (Image* image, _images)
+    {
+        switch (view)
+        {
+        case 0:
+            image->getThumbnail()->setVisible(true);
+            break;
+        case 1:
+            image->getThumbnail()->setVisible(image->isThumbsUp());
+            break;
+        case 2:
+            image->getThumbnail()->setVisible(image->isThumbsDown());
+            break;
+        default:
+            // NO-OP
+            break;
+        }
     }
 }
 
@@ -165,32 +192,6 @@ void ContentThumbs::onThumbsDown()
         }
     }
     QTimer::singleShot(TIMEOUT, [=](){ setView(-1); });
-}
-
-void ContentThumbs::setView(int view)
-{
-    static int lastView = 1;
-    view = (view < 0) ? lastView : view;
-    lastView = (view < 0) ? lastView : view;
-
-    foreach (Image* image, _images)
-    {
-        switch (view)
-        {
-        case 0:
-            image->getThumbnail()->setVisible(true);
-            break;
-        case 1:
-            image->getThumbnail()->setVisible(image->isThumbsUp());
-            break;
-        case 2:
-            image->getThumbnail()->setVisible(image->isThumbsDown());
-            break;
-        default:
-            // NO-OP
-            break;
-        }
-    }
 }
 
 /*

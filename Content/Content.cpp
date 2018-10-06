@@ -4,8 +4,8 @@
 #include "ContentThumbs.h"
 
 Content::Content() :
-    _contentFull(new ContentFull()),
-    _contentThumbs(new ContentThumbs())
+    _contentFull(new ContentFull(this)),
+    _contentThumbs(new ContentThumbs(this))
 {
     // Empty...
 }
@@ -22,12 +22,14 @@ Content::~Content()
  */
 void Content::initFull(QScrollArea* scrollArea)
 {
-    scrollArea->hide();
+    scrollArea->setHidden(true);
+    _scrollAreaFull = scrollArea;
     scrollArea->setWidget(_contentFull);
 }
 
 void Content::initThumbs(QScrollArea* scrollArea)
 {
+    _scrollAreaThumbs = scrollArea;
     scrollArea->setWidget(_contentThumbs);
 }
 
@@ -77,4 +79,21 @@ void Content::onThumbsUp()
 void Content::onThumbsDown()
 {
     _contentThumbs->onThumbsDown();
+}
+
+void Content::onDoubleClick(QString& fileName)
+{
+    if (fileName.isEmpty())
+    {
+        //_contentFull->setImage(fileName);
+        _scrollAreaFull->setHidden(true);
+        _scrollAreaThumbs->setHidden(false);
+    }
+    else
+    {
+        _contentFull->setImage(fileName);
+        _scrollAreaFull->setHidden(false);
+        _scrollAreaThumbs->setHidden(true);
+
+    }
 }

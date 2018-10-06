@@ -6,7 +6,7 @@
 class ContentThumbs : public QWidget
 {
 public:
-    ContentThumbs();
+    ContentThumbs(class Content* parent);
     virtual ~ContentThumbs();
 
     // Mutators
@@ -27,6 +27,7 @@ protected:
 
 private:
     QString _lastPath;
+    class Content* _parent;
     class FlowLayout* _layout;
     QList<class Image*> _images;
 

@@ -23,10 +23,13 @@ public:
     virtual void onRotateR();
     virtual void onThumbsUp();
     virtual void onThumbsDown();
+    virtual void onDoubleClick(QString& fileName);
 
 private:
     class ContentFull* _contentFull;
     class ContentThumbs* _contentThumbs;
+    class QScrollArea* _scrollAreaFull;
+    class QScrollArea* _scrollAreaThumbs;
 };
 
 #endif // CONTENT_H

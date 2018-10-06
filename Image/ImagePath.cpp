@@ -35,9 +35,16 @@ bool ImagePath::isHidden() const
     return _isHidden;
 }
 
-QString ImagePath::getPath() const
+QString ImagePath::getPathImage() const
 {
-    return _path;
+    if (_isHidden)
+    {
+        return _pathThumbsDown;
+    }
+    else
+    {
+        return _pathThumbsUp;
+    }
 }
 
 QString ImagePath::getPathThumbsUp() const
@@ -53,4 +60,13 @@ QString ImagePath::getPathThumbsDown() const
 QString ImagePath::getPathThumbnail() const
 {
     return _pathThumbnail;
+}
+
+/*
+ * PUBLIC
+ *  Mutators
+ */
+void ImagePath::setIsHidden(bool isHidden)
+{
+    _isHidden = isHidden;
 }

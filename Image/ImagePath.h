@@ -17,10 +17,13 @@ public:
 
     // Accessors
     virtual bool isHidden() const;
-    virtual QString getPath() const;
+    virtual QString getPathImage() const;
     virtual QString getPathThumbsUp() const;
     virtual QString getPathThumbsDown() const;
     virtual QString getPathThumbnail() const;
+
+    // Mutators
+    virtual void setIsHidden(bool isHidden);
 
 protected:
     static const QString DIR_HIDDEN;
