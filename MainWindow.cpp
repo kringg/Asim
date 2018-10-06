@@ -1,5 +1,6 @@
 #include <QFileDialog>
 #include <QSettings>
+#include <QSortFilterProxyModel>
 #include <QStandardPaths>
 #include <QProcess>
 
@@ -14,14 +15,18 @@ MainWindow::MainWindow(QWidget *parent) :
     _doSave(true),
     _gui(new Ui::MainWindow()),
     _content(new MainContent()),
-    _treeModel(new QFileSystemModel())
+    _treeModel(new QFileSystemModel()),
+    _treeProxy(new QSortFilterProxyModel())
 {
     // Initialize
     _gui->setupUi(this);
     _gui->scrollArea->setWidget(_content);
+    // Configure tree model and proxy
+    _treeProxy->setSourceModel(_treeModel);
+    _treeProxy->setFilterRegExp("^[^.]*$");
 
     // Configure tree view pane
-    _gui->treeView->setModel(_treeModel);
+    _gui->treeView->setModel(_treeProxy);
     _gui->treeView->hideColumn(1); // Size
     _gui->treeView->hideColumn(2); // Type
     _gui->treeView->hideColumn(3); // Date
@@ -66,6 +71,7 @@ MainWindow::~MainWindow()
     delete _gui;
     delete _content;
     delete _treeModel;
+    delete _treeProxy;
 }
 
 /*
@@ -208,7 +214,7 @@ void MainWindow::setRootPath(QString rootPath)
         // Update tree model and view
         _treeModel->setRootPath(rootPath);
         _treeModel->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
-        _gui->treeView->setRootIndex(_treeModel->index(rootPath));
+        _gui->treeView->setRootIndex(_treeProxy->mapFromSource(_treeModel->index(rootPath)));
     }
 }
 
@@ -219,8 +225,8 @@ void MainWindow::setTreeIndex(QModelIndex index)
     _gui->treeView->setEnabled(false);
     _gui->scrollArea->setEnabled(false);
 
-    // Update root path (reloads content from disk)
-    _content->setPath(_treeModel->filePath(index));
+    // Update root path via tree proxy (reloads content from disk)
+    _content->setPath(_treeModel->filePath(_treeProxy->mapToSource(index)));
 
     // Re-Enable interactive elements
     _gui->scrollArea->setEnabled(true);

@@ -36,6 +36,7 @@ private:
     Ui::MainWindow *_gui;
     class MainContent* _content;
     class QFileSystemModel* _treeModel;
+    class QSortFilterProxyModel* _treeProxy;
 
     static const QString SETTINGS_FILE_NAME;
 };
