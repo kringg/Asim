@@ -27,6 +27,9 @@ public:
     virtual void setRotation(int);
     virtual void setSelected(bool);
 
+    // Operations
+    virtual void onEdit();
+
 private:
     class ImagePath* _path;
     class ImageThumb* _thumb;

@@ -42,6 +42,11 @@ void Content::initElements(QList<QWidget*> elements)
  * PUBLIC
  *  Mutators
  */
+void Content::setEdit(QString& edit)
+{
+    // TODO
+}
+
 void Content::setPath(QString& path)
 {
     _contentThumbs->setPath(path);
@@ -61,6 +66,11 @@ void Content::setView(int view)
  * PUBLIC
  *  Operations
  */
+void Content::onEdit()
+{
+    _contentThumbs->onEdit();
+}
+
 void Content::onReset()
 {
     _contentThumbs->onReset();

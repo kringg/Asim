@@ -77,3 +77,31 @@ void Image::setSelected(bool isSelected)
 {
     _thumb->setIsSelected(isSelected);
 }
+
+/*
+ * PUBLIC
+ *  Operations
+ */
+void Image::onEdit()
+{
+    int revId = 0;
+    QString revPath = _path->getPathHistory(revId);
+
+    // Find first available revId
+    while (QFileInfo::exists(revPath))
+    {
+        revId += 1;
+        revPath = _path->getPathHistory(revId);
+    }
+
+    // Load current image and latest revision
+    int prevRevId = revId - 1;
+    QImage imgA(_path->getPathImage());
+    QImage imgB(_path->getPathHistory(prevRevId));
+
+    // Conditionally copy current to new revision
+    if (imgA != imgB)
+    {
+        QFile::copy(_path->getPathImage(), revPath);
+    }
+}

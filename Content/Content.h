@@ -22,11 +22,13 @@ public:
     virtual void initElements(QList<class QWidget*> elements);
 
     // Mutators
+    virtual void setEdit(QString& edit);
     virtual void setPath(QString& path);
     virtual void setSize(int size);
     virtual void setView(int view);
 
     // Operations
+    virtual void onEdit();
     virtual void onReset();
     virtual void onRotateL();
     virtual void onRotateR();

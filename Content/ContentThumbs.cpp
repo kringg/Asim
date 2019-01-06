@@ -54,6 +54,7 @@ void ContentThumbs::setPath(QString& path)
         // Ensure system paths exist
         QDir().mkdir(path + "/" + ImagePath::DIR_HIDDEN);
         QDir().mkdir(path + "/" + ImagePath::DIR_THUMBS);
+        QDir().mkdir(path + "/" + ImagePath::DIR_HISTORY);
 
         // File dirs
         QDir dir0(path);
@@ -121,6 +122,17 @@ void ContentThumbs::setView(int view)
  * PUBLIC
  *  Operations
  */
+void ContentThumbs::onEdit()
+{
+    foreach (Image* image, _images)
+    {
+        if (image->isSelected())
+        {
+            image->onEdit();
+        }
+    }
+}
+
 void ContentThumbs::onReset()
 {
     // Validate paths

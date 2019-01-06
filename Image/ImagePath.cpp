@@ -1,12 +1,15 @@
 #include "ImagePath.h"
 
-const QString ImagePath::DIR_HIDDEN = ".hidden";
-const QString ImagePath::DIR_THUMBS = ".thumbs";
+const QString ImagePath::DIR_HIDDEN  = ".hidden";
+const QString ImagePath::DIR_HISTORY = ".history";
+const QString ImagePath::DIR_THUMBS  = ".thumbs";
+const QString ImagePath::TOKEN_HISTORY = ".XXX.";
 
 ImagePath::ImagePath(QFileInfo info)
 {
     QString fileName = info.fileName();
     QString basePath = info.absolutePath();
+    QString historyName = info.baseName() + TOKEN_HISTORY + info.suffix();
     _isHidden = (basePath.split("/").last() == DIR_HIDDEN);
 
     if (_isHidden)
@@ -15,13 +18,15 @@ ImagePath::ImagePath(QFileInfo info)
 
         _pathThumbsUp = parentPath + "/" + fileName;
         _pathThumbsDown = basePath + "/" + fileName;
-        _pathThumbnail = parentPath + "/" + DIR_THUMBS + "/" + fileName;
+        _pathThumbnail  = parentPath + "/" + DIR_THUMBS + "/" + fileName;
+        _pathHistory    = parentPath + "/" + DIR_HISTORY + "/" + historyName;
     }
     else
     {
         _pathThumbsUp = basePath + "/" + fileName;
         _pathThumbsDown = basePath + "/" + DIR_HIDDEN + "/" + fileName;
         _pathThumbnail  = basePath + "/" + DIR_THUMBS + "/" + fileName;
+        _pathHistory    = basePath + "/" + DIR_HISTORY + "/" + historyName;
     }
 }
 
@@ -64,6 +69,13 @@ QString ImagePath::getPathThumbsDown() const
 QString ImagePath::getPathThumbnail() const
 {
     return _pathThumbnail;
+}
+
+QString ImagePath::getPathHistory(int revId) const
+{
+    QString path = _pathHistory; // Remove const modifier
+    QString revStr = QString::number(revId).rightJustified(3, '0');
+    return path.replace(TOKEN_HISTORY, ".v" + revStr + ".");
 }
 
 /*

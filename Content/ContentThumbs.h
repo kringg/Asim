@@ -15,6 +15,7 @@ public:
     virtual void setView(int view);
 
     // Operations
+    virtual void onEdit();
     virtual void onReset();
     virtual void onRotateL();
     virtual void onRotateR();

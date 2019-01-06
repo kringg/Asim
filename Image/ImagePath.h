@@ -22,6 +22,7 @@ public:
     virtual QString getPathThumbsUp() const; // Full-sized image path, if image is thumbs-up
     virtual QString getPathThumbsDown() const; // Full-sized image path, if image is thumbs-down
     virtual QString getPathThumbnail() const; // Thumbnail-sized image path (constant regardless of thumbs-up or thumbs-down)
+    virtual QString getPathHistory(int revId) const; // Theoretical path to revision (history) given by revId
 
     // Mutators
     virtual void setThumbsUp();
@@ -29,13 +30,17 @@ public:
 
 protected:
     static const QString DIR_HIDDEN;
+    static const QString DIR_HISTORY;
     static const QString DIR_THUMBS;
 
 private:
     bool _isHidden;
+    QString _pathHistory;
     QString _pathThumbsUp;
     QString _pathThumbsDown;
     QString _pathThumbnail;
+
+    static const QString TOKEN_HISTORY;
 };
 
 #endif // IMAGEPATH_H
