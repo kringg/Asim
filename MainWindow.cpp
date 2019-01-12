@@ -20,9 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     // Initialize
     _gui->setupUi(this);
-    _content->initFull(_gui->contentFull);
-    _content->initThumbs(_gui->contentThumbs);
-    _content->initElements(QList<QWidget*>() << _gui->cbViewMode << _gui->sliderSize);
+    _content->initFull(_gui->contentFull, QList<QWidget*>() << _gui->cbViewMode << _gui->sliderSize);
+    _content->initThumbs(_gui->contentThumbs, QList<QWidget*>() << _gui->btnNext << _gui->btnPrev);
 
     // Configure tree model and proxy
     _treeProxy->setSourceModel(_treeModel);

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>705</width>
+    <width>876</width>
     <height>480</height>
    </rect>
   </property>
@@ -44,11 +44,10 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>607</width>
+             <width>778</width>
              <height>188</height>
             </rect>
            </property>
-           <zorder>pushButton</zorder>
           </widget>
          </widget>
         </item>
@@ -71,12 +70,10 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>607</width>
+             <width>778</width>
              <height>188</height>
             </rect>
            </property>
-           <zorder>horizontalLayoutWidget</zorder>
-           <zorder>horizontalLayoutWidget</zorder>
           </widget>
          </widget>
         </item>
@@ -100,6 +97,9 @@
            </property>
            <item>
             <widget class="QPushButton" name="btnPrev">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="text">
               <string>&lt;&lt;</string>
              </property>
@@ -107,6 +107,9 @@
            </item>
            <item>
             <widget class="QPushButton" name="btnNext">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="text">
               <string>&gt;&gt;</string>
              </property>
@@ -292,7 +295,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>705</width>
+     <width>876</width>
      <height>21</height>
     </rect>
    </property>

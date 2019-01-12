@@ -20,22 +20,20 @@ Content::~Content()
  * PUBLIC
  *  Initialization
  */
-void Content::initFull(QScrollArea* scrollArea)
+void Content::initFull(QScrollArea* scrollArea, QList<class QWidget*> elements)
 {
+    _elementsFull = elements;
     scrollArea->setHidden(true);
     _scrollAreaFull = scrollArea;
     scrollArea->setWidget(_contentFull);
 }
 
-void Content::initThumbs(QScrollArea* scrollArea)
+void Content::initThumbs(QScrollArea* scrollArea, QList<class QWidget*> elements)
 {
+    _elementsThumbs = elements;
+    scrollArea->setHidden(false);
     _scrollAreaThumbs = scrollArea;
     scrollArea->setWidget(_contentThumbs);
-}
-
-void Content::initElements(QList<QWidget*> elements)
-{
-    _elements = elements;
 }
 
 /*
@@ -112,21 +110,20 @@ void Content::onThumbsDown()
 
 void Content::onDoubleClick(class ImagePath* path)
 {
-    if (path == nullptr)
-    {
-        _scrollAreaFull->setHidden(true);
-        _scrollAreaThumbs->setHidden(false);
-    }
-    else
-    {
-        _contentFull->setImage(path);
-        _scrollAreaFull->setHidden(false);
-        _scrollAreaThumbs->setHidden(true);
+    // Set content and imagery
+    _contentFull->setImage(path);
+    _scrollAreaFull->setHidden(path == nullptr);
+    _scrollAreaThumbs->setHidden(path != nullptr);
 
-    }
-
-    foreach (QWidget* widget, _elements)
+    // (En/Dis)able full-view widgets
+    foreach (QWidget* widget, _elementsFull)
     {
         widget->setEnabled(path == nullptr);
+    }
+
+    // (En/Dis)able thumb-view widgets
+    foreach (QWidget* widget, _elementsThumbs)
+    {
+        widget->setEnabled(path != nullptr);
     }
 }

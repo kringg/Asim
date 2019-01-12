@@ -19,9 +19,8 @@ public:
     virtual ~Content();
 
     // Initialization
-    virtual void initFull(class QScrollArea* scrollArea);
-    virtual void initThumbs(class QScrollArea* scrollArea);
-    virtual void initElements(QList<class QWidget*> elements);
+    virtual void initFull(class QScrollArea* scrollArea, QList<class QWidget*> elements);
+    virtual void initThumbs(class QScrollArea* scrollArea, QList<class QWidget*> elements);
 
     // Mutators
     virtual void setEdit(QString& edit);
@@ -41,11 +40,14 @@ public:
     virtual void onDoubleClick(class ImagePath* path);
 
 private:
-    QList<class QWidget*> _elements;
     class ContentFull* _contentFull;
     class ContentThumbs* _contentThumbs;
+
     class QScrollArea* _scrollAreaFull;
     class QScrollArea* _scrollAreaThumbs;
+
+    QList<class QWidget*> _elementsFull;
+    QList<class QWidget*> _elementsThumbs;
 };
 
 #endif // CONTENT_H

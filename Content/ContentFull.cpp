@@ -16,8 +16,11 @@ ContentFull::ContentFull(Content* parent) :
  */
 void ContentFull::setImage(ImagePath* path)
 {
-    _pixmap.load(path->getPathImage());
-    _opacity = (path->isThumbsUp()) ? 1.0 : 0.5;
+    if (path != nullptr)
+    {
+        _pixmap.load(path->getPathImage());
+        _opacity = (path->isThumbsUp()) ? 1.0 : 0.5;
+    }
 }
 
 /*
