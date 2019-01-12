@@ -41,6 +41,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Configure unicode emoji buttons
     _gui->btnEdit->setFixedWidth(_gui->btnEdit->height());
+    _gui->btnNext->setFixedWidth(_gui->btnNext->height());
+    _gui->btnPrev->setFixedWidth(_gui->btnPrev->height());
     _gui->btnRotateL->setFixedWidth(_gui->btnRotateL->height());
     _gui->btnRotateR->setFixedWidth(_gui->btnRotateR->height());
     _gui->btnThumbsUp->setFixedWidth(_gui->btnThumbsUp->height());

@@ -48,6 +48,7 @@
              <height>188</height>
             </rect>
            </property>
+           <zorder>pushButton</zorder>
           </widget>
          </widget>
         </item>
@@ -74,7 +75,8 @@
              <height>188</height>
             </rect>
            </property>
-           <zorder>contentFull</zorder>
+           <zorder>horizontalLayoutWidget</zorder>
+           <zorder>horizontalLayoutWidget</zorder>
           </widget>
          </widget>
         </item>
@@ -83,7 +85,7 @@
           <property name="enabled">
            <bool>false</bool>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,0,1,0,0,0,1,0,0,1">
+          <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,0,0,0,0,1,0,0,0,1,0,0,1">
            <property name="leftMargin">
             <number>0</number>
            </property>
@@ -96,6 +98,30 @@
            <property name="bottomMargin">
             <number>0</number>
            </property>
+           <item>
+            <widget class="QPushButton" name="btnPrev">
+             <property name="text">
+              <string>&lt;&lt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnNext">
+             <property name="text">
+              <string>&gt;&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="Line" name="line">
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+            </widget>
+           </item>
            <item>
             <widget class="QPushButton" name="btnRotateR">
              <property name="statusTip">
@@ -250,6 +276,9 @@
           <zorder>divider0</zorder>
           <zorder>btnRotateR</zorder>
           <zorder>btnThumbsDown</zorder>
+          <zorder>btnPrev</zorder>
+          <zorder>btnNext</zorder>
+          <zorder>line</zorder>
          </widget>
         </item>
        </layout>

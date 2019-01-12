@@ -71,6 +71,16 @@ void Content::onEdit()
     _contentThumbs->onEdit();
 }
 
+void Content::onNext()
+{
+
+}
+
+void Content::onPrev()
+{
+
+}
+
 void Content::onReset()
 {
     _contentThumbs->onReset();

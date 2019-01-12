@@ -9,6 +9,8 @@
  *   |-- ContentFull
  *   |
  *   '-- ContentThumbs
+ *
+ * Note: All heavy-lifting is done in ContentThumbs, ContentFull is strictly a viewer.
  */
 class Content
 {
@@ -29,6 +31,8 @@ public:
 
     // Operations
     virtual void onEdit();
+    virtual void onNext();
+    virtual void onPrev();
     virtual void onReset();
     virtual void onRotateL();
     virtual void onRotateR();
