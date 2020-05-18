@@ -40,12 +40,7 @@ void Content::initThumbs(QScrollArea* scrollArea, QList<class QWidget*> elements
  * PUBLIC
  *  Mutators
  */
-void Content::setEdit(QString& edit)
-{
-    // TODO
-}
-
-void Content::setPath(QString& path)
+void Content::setPath(QString path)
 {
     _contentThumbs->setPath(path);
 }
@@ -64,9 +59,9 @@ void Content::setView(int view)
  * PUBLIC
  *  Operations
  */
-void Content::onEdit()
+void Content::onEdit(QString editAppPath)
 {
-    _contentThumbs->onEdit();
+    _contentThumbs->onEdit(editAppPath);
 }
 
 void Content::onNext()

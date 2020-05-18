@@ -211,7 +211,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="cbEditMode">
+            <widget class="EditApps" name="cbEditMode">
              <property name="statusTip">
               <string>Choose application with which to edit selected image(s)</string>
              </property>
@@ -353,6 +353,13 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>EditApps</class>
+   <extends>QComboBox</extends>
+   <header>Qt/EditApps.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="Resources/Resources.qrc"/>
  </resources>

@@ -59,7 +59,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     #define CB_TYPE static_cast<void (QComboBox::*)(int)>
     connect(_gui->actionResetCache,   &QAction::triggered,              [=](){ _content->onReset(); });
-    connect(_gui->btnEdit,            &QPushButton::clicked,            [=](){ _content->onEdit(); });
+    connect(_gui->btnEdit,            &QPushButton::clicked,            [=](){ _content->onEdit(_gui->cbEditMode->getCurAppPath()); });
     connect(_gui->btnRotateL,         &QPushButton::clicked,            [=](){ _content->onRotateL(); });
     connect(_gui->btnRotateR,         &QPushButton::clicked,            [=](){ _content->onRotateR(); });
     connect(_gui->btnThumbsUp,        &QPushButton::clicked,            [=](){ _content->onThumbsUp(); });

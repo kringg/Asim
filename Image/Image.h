@@ -28,7 +28,7 @@ public:
     virtual void setSelected(bool);
 
     // Operations
-    virtual void onEdit();
+    virtual void onEdit(QString& editAppPath);
 
 private:
     class ImagePath* _path;

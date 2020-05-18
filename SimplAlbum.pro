@@ -13,6 +13,7 @@ SOURCES += \
     Image/ImagePath.cpp \
     Image/ImageThumb.cpp \
     Qt/QFlowLayout.cpp \
+    Qt/EditApps.cpp
 
 HEADERS += \
     MainWindow.h \
@@ -23,6 +24,7 @@ HEADERS += \
     Image/ImagePath.h \
     Image/ImageThumb.h \
     Qt/QFlowLayout.h \
+    Qt/EditApps.h
 
 FORMS += \
     MainWindow.ui

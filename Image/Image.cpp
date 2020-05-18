@@ -82,26 +82,29 @@ void Image::setSelected(bool isSelected)
  * PUBLIC
  *  Operations
  */
-void Image::onEdit()
+void Image::onEdit(QString& editAppPath)
 {
-    int revId = 0;
-    QString revPath = _path->getPathHistory(revId);
+    int newRevId = 0;
+    QString curImgPath = _path->getPathImage();
+    QString newRevPath = _path->getPathHistory(newRevId);
+    QString curRevPath = newRevPath; // Initialize current to same as new
 
     // Find first available revId
-    while (QFileInfo::exists(revPath))
+    while (QFileInfo::exists(newRevPath))
     {
-        revId += 1;
-        revPath = _path->getPathHistory(revId);
+        newRevId += 1;
+        curRevPath = newRevPath;
+        newRevPath = _path->getPathHistory(newRevId);
     }
 
-    // Load current image and latest revision
-    int prevRevId = revId - 1;
-    QImage imgA(_path->getPathImage());
-    QImage imgB(_path->getPathHistory(prevRevId));
-
-    // Conditionally copy current to new revision
-    if (imgA != imgB)
+    // Compare current image to current revision
+    if (QImage(curImgPath) != QImage(curRevPath))
     {
-        QFile::copy(_path->getPathImage(), revPath);
+        // They differ, create new revision
+        QFile::copy(_path->getPathImage(), newRevPath);
     }
+
+    // Start image editor, passing current image (not revision!) as argument
+    QProcess::startDetached(QDir::toNativeSeparators(editAppPath), QStringList() <<
+                            QDir::toNativeSeparators(curImgPath));
 }

@@ -122,13 +122,13 @@ void ContentThumbs::setView(int view)
  * PUBLIC
  *  Operations
  */
-void ContentThumbs::onEdit()
+void ContentThumbs::onEdit(QString& editAppPath)
 {
     foreach (Image* image, _images)
     {
         if (image->isSelected())
         {
-            image->onEdit();
+            image->onEdit(editAppPath);
         }
     }
 }
